@@ -14,6 +14,10 @@ class DatabaseSeeder extends Seeder
             PermissionRoleTableSeeder::class,
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
+            DriverTableSeeder::class,
+            SatpamTableSeeder::class,
+            UnitTableSeeder::class,
+            SubUnitTableSeeder::class,
         ]);
     }
 }
