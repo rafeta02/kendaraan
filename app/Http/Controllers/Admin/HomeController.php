@@ -79,6 +79,23 @@ class HomeController
                 ->{$settings2['aggregate_function'] ?? 'count'}($settings2['aggregate_field'] ?? '*');
         }
 
-        return view('home', compact('settings1', 'settings2'));
+        $settings3 = [
+            'chart_title'           => 'Jumlah Peminjaman',
+            'chart_type'            => 'bar',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\Pinjam',
+            'group_by_field'        => 'date_start',
+            'group_by_period'       => 'month',
+            'aggregate_function'    => 'count',
+            'filter_field'          => 'created_at',
+            'group_by_field_format' => 'Y-m-d',
+            'column_class'          => 'col-md-12',
+            'entries_number'        => '5',
+            'translation_key'       => 'pinjam',
+        ];
+
+        $chart3 = new LaravelChart($settings3);
+
+        return view('home', compact('chart3', 'settings1', 'settings2'));
     }
 }

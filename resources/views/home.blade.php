@@ -34,6 +34,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="{{ $chart3->options['column_class'] }}">
+                            <h3>{!! $chart3->options['chart_title'] !!}</h3>
+                            {!! $chart3->renderHtml() !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,5 +47,5 @@
 @endsection
 @section('scripts')
 @parent
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>{!! $chart3->renderJs() !!}
 @endsection
