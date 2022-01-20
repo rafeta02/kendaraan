@@ -59,6 +59,12 @@
                                         {{ trans('cruds.pinjam.fields.driver_status') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.pinjam.fields.driver') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.driver.fields.no_wa') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.pinjam.fields.key_status') }}
                                     </th>
                                     <th>
@@ -107,6 +113,12 @@
                                         <td>
                                             <span style="display:none">{{ $pinjam->driver_status ?? '' }}</span>
                                             <input type="checkbox" disabled="disabled" {{ $pinjam->driver_status ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            {{ $pinjam->driver->nama ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $pinjam->driver->no_wa ?? '' }}
                                         </td>
                                         <td>
                                             <span style="display:none">{{ $pinjam->key_status ?? '' }}</span>
