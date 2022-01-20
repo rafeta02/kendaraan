@@ -105,6 +105,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.pinjam.fields.driver') }}
+                        </th>
+                        <td>
+                            {{ $pinjam->driver->nama ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.pinjam.fields.key_status') }}
                         </th>
                         <td>

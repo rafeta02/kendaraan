@@ -301,6 +301,8 @@ return [
             'deleted_at_helper'    => ' ',
             'created_by'           => 'Created By',
             'created_by_helper'    => ' ',
+            'driver'               => 'Driver',
+            'driver_helper'        => ' ',
         ],
     ],
 ];

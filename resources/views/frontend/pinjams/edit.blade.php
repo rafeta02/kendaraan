@@ -96,6 +96,20 @@
                             <span class="help-block">{{ trans('cruds.pinjam.fields.driver_status_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="driver_id">{{ trans('cruds.pinjam.fields.driver') }}</label>
+                            <select class="form-control select2" name="driver_id" id="driver_id">
+                                @foreach($drivers as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('driver_id') ? old('driver_id') : $pinjam->driver->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('driver'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('driver') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.pinjam.fields.driver_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <div>
                                 <input type="hidden" name="key_status" value="0">
                                 <input type="checkbox" name="key_status" id="key_status" value="1" {{ $pinjam->key_status || old('key_status', 0) === 1 ? 'checked' : '' }}>

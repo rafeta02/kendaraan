@@ -58,6 +58,12 @@
                         {{ trans('cruds.pinjam.fields.driver_status') }}
                     </th>
                     <th>
+                        {{ trans('cruds.pinjam.fields.driver') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.driver.fields.no_wa') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.pinjam.fields.key_status') }}
                     </th>
                     <th>
@@ -128,6 +134,8 @@
 { data: 'borrowed_by_name', name: 'borrowed_by.name' },
 { data: 'borrowed_by.email', name: 'borrowed_by.email' },
 { data: 'driver_status', name: 'driver_status' },
+{ data: 'driver_nama', name: 'driver.nama' },
+{ data: 'driver.no_wa', name: 'driver.no_wa' },
 { data: 'key_status', name: 'key_status' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
