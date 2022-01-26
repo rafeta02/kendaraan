@@ -17,6 +17,8 @@ class AddRelationshipFieldsToPinjamsTable extends Migration
             $table->foreign('processed_by_id', 'processed_by_fk_5819103')->references('id')->on('users');
             $table->unsignedBigInteger('driver_id')->nullable();
             $table->foreign('driver_id', 'driver_fk_5824651')->references('id')->on('drivers');
+            $table->unsignedBigInteger('satpam_id')->nullable();
+            $table->foreign('satpam_id', 'satpam_fk_5860331')->references('id')->on('satpams');
             $table->unsignedBigInteger('created_by_id')->nullable();
             $table->foreign('created_by_id', 'created_by_fk_5819109')->references('id')->on('users');
         });

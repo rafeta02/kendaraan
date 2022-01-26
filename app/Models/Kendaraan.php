@@ -44,6 +44,7 @@ class Kendaraan extends Model
         'kondisi',
         'operasional',
         'unit_kerja_id',
+        'is_used',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -48,6 +48,9 @@
                                         {{ trans('cruds.user.fields.nama') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.user.fields.unit') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -77,6 +80,9 @@
                                         </td>
                                         <td>
                                             {{ $user->nama ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $user->unit->nama ?? '' }}
                                         </td>
                                         <td>
                                             @can('user_show')

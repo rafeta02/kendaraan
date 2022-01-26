@@ -50,6 +50,7 @@ class Pinjam extends Model
         'driver_status',
         'driver_id',
         'key_status',
+        'satpam_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -120,6 +121,11 @@ class Pinjam extends Model
     public function driver()
     {
         return $this->belongsTo(Driver::class, 'driver_id');
+    }
+
+    public function satpam()
+    {
+        return $this->belongsTo(Satpam::class, 'satpam_id');
     }
 
     public function created_by()

@@ -117,6 +117,14 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.unit') }}
+                        </th>
+                        <td>
+                            {{ $user->unit->nama ?? '' }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

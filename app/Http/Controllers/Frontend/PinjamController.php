@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPinjamRequest;
 use App\Http\Requests\StorePinjamRequest;
 use App\Http\Requests\UpdatePinjamRequest;
-use App\Models\Driver;
 use App\Models\Kendaraan;
 use App\Models\Pinjam;
 use Gate;
@@ -19,7 +18,7 @@ class PinjamController extends Controller
     {
         abort_if(Gate::denies('pinjam_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pinjams = Pinjam::with(['kendaraan', 'borrowed_by', 'processed_by', 'driver', 'created_by'])->get();
+        $pinjams = Pinjam::with(['kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by'])->get();
 
         return view('frontend.pinjams.index', compact('pinjams'));
     }
@@ -46,11 +45,9 @@ class PinjamController extends Controller
 
         $kendaraans = Kendaraan::pluck('plat_no', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $drivers = Driver::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by');
 
-        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'created_by');
-
-        return view('frontend.pinjams.edit', compact('drivers', 'kendaraans', 'pinjam'));
+        return view('frontend.pinjams.edit', compact('kendaraans', 'pinjam'));
     }
 
     public function update(UpdatePinjamRequest $request, Pinjam $pinjam)
@@ -64,7 +61,7 @@ class PinjamController extends Controller
     {
         abort_if(Gate::denies('pinjam_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'created_by');
+        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by');
 
         return view('frontend.pinjams.show', compact('pinjam'));
     }
