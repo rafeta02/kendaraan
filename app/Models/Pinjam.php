@@ -20,8 +20,17 @@ class Pinjam extends Model
     public const STATUS_SELECT = [
         'diajukan' => 'Diajukan',
         'diproses' => 'Diproses',
+        // 'diterima' => 'Diterima',
         'dipinjam' => 'Dipinjam',
         'selesai'  => 'Selesai',
+    ];
+
+    public const STATUS_BACKGROUND = [
+        'diajukan' => 'primary',
+        'diproses' => 'warning',
+        // 'diterima' => 'secondary',
+        'dipinjam' => 'success',
+        'selesai'  => 'dark',
     ];
 
     public $table = 'pinjams';
@@ -124,5 +133,21 @@ class Pinjam extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function getWaktuPeminjamanAttribute()
+    {
+        $date_start = Carbon::parse($this->attributes['date_start'])->format('d F Y');
+        $date_end = Carbon::parse($this->attributes['date_end'])->format('d F Y');
+        return $date_start. ' - '. $date_end;
+    }
+
+    public function getDateReturnFormattedAttribute()
+    {
+        if ($this->attributes['date_return'] == null) {
+            return null;
+        }
+
+        return Carbon::parse($this->attributes['date_return'])->format('d F Y');
     }
 }

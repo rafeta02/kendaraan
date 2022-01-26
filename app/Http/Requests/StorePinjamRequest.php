@@ -34,7 +34,7 @@ class StorePinjamRequest extends FormRequest
                 'required',
             ],
             'status' => [
-                'required',
+                'nullable',
             ],
         ];
     }

@@ -16,6 +16,18 @@ $(document).ready(function () {
     }
   })
 
+  $('.date-picker').datetimepicker({
+    format: 'YYYY-MM-DD',
+    useCurrent: false,
+    locale: 'en',
+    icons: {
+      up: 'fas fa-chevron-up',
+      down: 'fas fa-chevron-down',
+      previous: 'fas fa-chevron-left',
+      next: 'fas fa-chevron-right'
+    }
+  })
+
   $('.datetime').datetimepicker({
     format: 'YYYY-MM-DD HH:mm:ss',
     locale: 'en',

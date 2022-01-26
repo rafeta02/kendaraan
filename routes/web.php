@@ -67,6 +67,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('pinjams/destroy', 'PinjamController@massDestroy')->name('pinjams.massDestroy');
     Route::resource('pinjams', 'PinjamController');
 
+    // Proceed
+    Route::delete('process/destroy', 'AdminAccController@massDestroy')->name('process.massDestroy');
+    Route::post('process/accept', 'AdminAccController@acceptPengajuan')->name('process.accept');
+    Route::get('process/choose-driver', 'AdminAccController@chooseDriver')->name('process.chooseDriver');
+    Route::post('process/save-driver', 'AdminAccController@saveDriver')->name('process.saveDriver');
+    Route::resource('process', 'AdminAccController');
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

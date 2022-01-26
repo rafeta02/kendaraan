@@ -8,9 +8,11 @@ use App\Http\Requests\StorePinjamRequest;
 use App\Http\Requests\UpdatePinjamRequest;
 use App\Models\Kendaraan;
 use App\Models\Pinjam;
+use App\Models\LogPeminjaman;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use DB;
 
 class PinjamController extends Controller
 {
@@ -27,15 +29,30 @@ class PinjamController extends Controller
     {
         abort_if(Gate::denies('pinjam_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $kendaraans = Kendaraan::pluck('plat_no', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $kendaraans = Kendaraan::all()->pluck('no_nama', 'id');
 
         return view('frontend.pinjams.create', compact('kendaraans'));
     }
 
     public function store(StorePinjamRequest $request)
     {
-        $pinjam = Pinjam::create($request->all());
+        $kendaraan = Kendaraan::find($request->kendaraan_id);
 
+        $request->request->add(['status' => 'diajukan']);
+        $request->request->add(['status_text' => 'Diajukan oleh "' . auth()->user()->name .'" peminjaman kendaraan "'.$kendaraan->no_nama .'"']);
+        $request->request->add(['borrowed_by_id' => auth()->user()->id]);
+
+        DB::transaction(function() use ($request) {
+            $pinjam = Pinjam::create($request->all());
+
+            $log = LogPeminjaman::create([
+                'peminjaman_id' => $pinjam->id,
+                'kendaraan_id' => $pinjam->kendaraan_id,
+                'peminjam_id' => $pinjam->borrowed_by_id,
+                'jenis' => 'diajukan',
+                'log' => 'Peminjaman kendaraan '. $pinjam->kendaraan->no_nama. ' Diajukan oleh "'. $pinjam->borrowed_by->name.'" Untuk tanggal '. $pinjam->WaktuPeminjaman . ' Dengan keperluan "' . $pinjam->reason .'"',
+            ]);
+        });
         return redirect()->route('frontend.pinjams.index');
     }
 

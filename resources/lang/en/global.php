@@ -2,7 +2,7 @@
 
 return [
     'actions'                        => 'Actions',
-    'add'                            => 'Add',
+    'add'                            => 'Tambah',
     'allRightsReserved'              => 'All rights reserved.',
     'areYouSure'                     => 'Are you sure?',
     'clickHereToVerify'              => 'Click here to verify',
@@ -16,6 +16,7 @@ return [
     'emailVerificationSuccess'       => 'User email verified successfully',
     'entries'                        => 'Entries',
     'filterDate'                     => 'Filter by date',
+    'filter'                         => 'Filter',
     'forgot_password'                => 'Forgot your password?',
     'home'                           => 'Home',
     'list'                           => 'List',

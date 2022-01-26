@@ -23,43 +23,19 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.pinjam.fields.id') }}
+                                        {{ trans('cruds.kendaraan.fields.plat_no') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.pinjam.fields.kendaraan') }}
+                                        Kendaraan
                                     </th>
                                     <th>
-                                        {{ trans('cruds.kendaraan.fields.merk') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.kendaraan.fields.jenis') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.pinjam.fields.date_start') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.pinjam.fields.date_end') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.pinjam.fields.date_return') }}
+                                        {{ trans('cruds.pinjam.fields.waktu_peminjaman') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.pinjam.fields.reason') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.pinjam.fields.status') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.pinjam.fields.borrowed_by') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.user.fields.email') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.pinjam.fields.driver_status') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.pinjam.fields.key_status') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -70,48 +46,32 @@
                                 @foreach($pinjams as $key => $pinjam)
                                     <tr data-entry-id="{{ $pinjam->id }}">
                                         <td>
-                                            {{ $pinjam->id ?? '' }}
+                                            {{ $pinjam->kendaraan->no_pol ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $pinjam->kendaraan->plat_no ?? '' }}
+                                            {{ $pinjam->kendaraan->no_nama ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $pinjam->kendaraan->merk ?? '' }}
-                                        </td>
-                                        <td>
-                                            @if($pinjam->kendaraan)
-                                                {{ $pinjam->kendaraan::JENIS_SELECT[$pinjam->kendaraan->jenis] ?? '' }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{ $pinjam->date_start ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $pinjam->date_end ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $pinjam->date_return ?? '' }}
+                                            {{ $pinjam->waktu_peminjaman }}
                                         </td>
                                         <td>
                                             {{ $pinjam->reason ?? '' }}
                                         </td>
                                         <td>
-                                            {{ App\Models\Pinjam::STATUS_SELECT[$pinjam->status] ?? '' }}
+                                            @if($pinjam->status == 'selesai')
+                                                 <span class="badge badge-dark">Dikembalikan {{ $pinjam->date_return_formatted }}</span>
+                                            @else
+                                                <span class="badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$pinjam->status] ?? '' }}">{{ App\Models\Pinjam::STATUS_SELECT[$pinjam->status] ?? '' }}</span>
+                                            @endif
                                         </td>
-                                        <td>
-                                            {{ $pinjam->borrowed_by->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $pinjam->borrowed_by->email ?? '' }}
-                                        </td>
-                                        <td>
+                                        {{-- <td>
                                             <span style="display:none">{{ $pinjam->driver_status ?? '' }}</span>
                                             <input type="checkbox" disabled="disabled" {{ $pinjam->driver_status ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             <span style="display:none">{{ $pinjam->key_status ?? '' }}</span>
                                             <input type="checkbox" disabled="disabled" {{ $pinjam->key_status ? 'checked' : '' }}>
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             @can('pinjam_show')
                                                 <a class="btn btn-xs btn-primary" href="{{ route('frontend.pinjams.show', $pinjam->id) }}">
@@ -192,8 +152,9 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
 @endsection
+

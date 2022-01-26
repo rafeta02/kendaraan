@@ -6,7 +6,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    {{ trans('global.create') }} {{ trans('cruds.pinjam.title_singular') }}
+                    Pengajuan {{ trans('cruds.pinjam.title_singular') }}
                 </div>
 
                 <div class="card-body">
@@ -29,7 +29,7 @@
                         </div>
                         <div class="form-group">
                             <label class="required" for="date_start">{{ trans('cruds.pinjam.fields.date_start') }}</label>
-                            <input class="form-control date" type="text" name="date_start" id="date_start" value="{{ old('date_start') }}" required>
+                            <input class="form-control date-picker" type="text" name="date_start" id="date_start" value="{{ old('date_start') }}" required>
                             @if($errors->has('date_start'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('date_start') }}
@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label class="required" for="date_end">{{ trans('cruds.pinjam.fields.date_end') }}</label>
-                            <input class="form-control date" type="text" name="date_end" id="date_end" value="{{ old('date_end') }}" required>
+                            <input class="form-control date-picker" type="text" name="date_end" id="date_end" value="{{ old('date_end') }}" required>
                             @if($errors->has('date_end'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('date_end') }}
@@ -58,47 +58,6 @@
                             <span class="help-block">{{ trans('cruds.pinjam.fields.reason_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label class="required">{{ trans('cruds.pinjam.fields.status') }}</label>
-                            <select class="form-control" name="status" id="status" required>
-                                <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Models\Pinjam::STATUS_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('status', 'diajukan') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('status'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('status') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.pinjam.fields.status_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="hidden" name="driver_status" value="0">
-                                <input type="checkbox" name="driver_status" id="driver_status" value="1" {{ old('driver_status', 0) == 1 ? 'checked' : '' }}>
-                                <label for="driver_status">{{ trans('cruds.pinjam.fields.driver_status') }}</label>
-                            </div>
-                            @if($errors->has('driver_status'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('driver_status') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.pinjam.fields.driver_status_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="hidden" name="key_status" value="0">
-                                <input type="checkbox" name="key_status" id="key_status" value="1" {{ old('key_status', 0) == 1 ? 'checked' : '' }}>
-                                <label for="key_status">{{ trans('cruds.pinjam.fields.key_status') }}</label>
-                            </div>
-                            @if($errors->has('key_status'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('key_status') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.pinjam.fields.key_status_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -110,4 +69,19 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+$(function () {
+    $('#date_start').datetimepicker().on('dp.change', function (e) {
+        $('#date_end').data('DateTimePicker').minDate(e.date);
+        $(this).data("DateTimePicker").hide();
+    });
+
+    $('#date_end').datetimepicker().on('dp.change', function (e) {
+        $('#date_start').data('DateTimePicker').maxDate(e.date);
+        $(this).data("DateTimePicker").hide();
+    });
+});
+</script>
 @endsection
