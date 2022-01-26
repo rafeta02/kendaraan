@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             SatpamTableSeeder::class,
             UnitTableSeeder::class,
             SubUnitTableSeeder::class,
+            KendaraanTableSeeder::class,
         ]);
     }
 }
