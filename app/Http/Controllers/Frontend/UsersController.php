@@ -9,6 +9,7 @@ use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
+use App\Models\SubUnit;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::with(['roles', 'media'])->get();
+        $users = User::with(['roles', 'unit', 'media'])->get();
 
         return view('frontend.users.index', compact('users'));
     }
@@ -35,7 +36,9 @@ class UsersController extends Controller
 
         $roles = Role::pluck('title', 'id');
 
-        return view('frontend.users.create', compact('roles'));
+        $units = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('frontend.users.create', compact('roles', 'units'));
     }
 
     public function store(StoreUserRequest $request)
@@ -59,9 +62,11 @@ class UsersController extends Controller
 
         $roles = Role::pluck('title', 'id');
 
-        $user->load('roles');
+        $units = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.users.edit', compact('roles', 'user'));
+        $user->load('roles', 'unit');
+
+        return view('frontend.users.edit', compact('roles', 'units', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -86,7 +91,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'borrowedByPeminjamen', 'userUserAlerts');
+        $user->load('roles', 'unit', 'borrowedByPinjams', 'userUserAlerts');
 
         return view('frontend.users.show', compact('user'));
     }

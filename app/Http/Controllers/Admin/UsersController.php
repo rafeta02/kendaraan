@@ -9,6 +9,7 @@ use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
+use App\Models\SubUnit;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class UsersController extends Controller
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = User::with(['roles'])->select(sprintf('%s.*', (new User())->table));
+            $query = User::with(['roles', 'unit'])->select(sprintf('%s.*', (new User())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -71,8 +72,11 @@ class UsersController extends Controller
             $table->editColumn('nama', function ($row) {
                 return $row->nama ? $row->nama : '';
             });
+            $table->addColumn('unit_nama', function ($row) {
+                return $row->unit ? $row->unit->nama : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'roles']);
+            $table->rawColumns(['actions', 'placeholder', 'roles', 'unit']);
 
             return $table->make(true);
         }
@@ -86,7 +90,9 @@ class UsersController extends Controller
 
         $roles = Role::pluck('title', 'id');
 
-        return view('admin.users.create', compact('roles'));
+        $units = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.users.create', compact('roles', 'units'));
     }
 
     public function store(StoreUserRequest $request)
@@ -110,9 +116,11 @@ class UsersController extends Controller
 
         $roles = Role::pluck('title', 'id');
 
-        $user->load('roles');
+        $units = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.users.edit', compact('roles', 'user'));
+        $user->load('roles', 'unit');
+
+        return view('admin.users.edit', compact('roles', 'units', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -137,7 +145,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'borrowedByPinjams', 'userUserAlerts');
+        $user->load('roles', 'unit', 'borrowedByPinjams', 'userUserAlerts');
 
         return view('admin.users.show', compact('user'));
     }

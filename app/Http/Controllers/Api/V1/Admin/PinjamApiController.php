@@ -17,7 +17,7 @@ class PinjamApiController extends Controller
     {
         abort_if(Gate::denies('pinjam_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PinjamResource(Pinjam::with(['kendaraan', 'borrowed_by', 'processed_by', 'created_by'])->get());
+        return new PinjamResource(Pinjam::with(['kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by'])->get());
     }
 
     public function store(StorePinjamRequest $request)
@@ -33,7 +33,7 @@ class PinjamApiController extends Controller
     {
         abort_if(Gate::denies('pinjam_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new PinjamResource($pinjam->load(['kendaraan', 'borrowed_by', 'processed_by', 'created_by']));
+        return new PinjamResource($pinjam->load(['kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by']));
     }
 
     public function update(UpdatePinjamRequest $request, Pinjam $pinjam)

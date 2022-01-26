@@ -81,6 +81,14 @@
                             {{ $kendaraan->unit_kerja->nama ?? '' }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.kendaraan.fields.is_used') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $kendaraan->is_used ? 'checked' : '' }}>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

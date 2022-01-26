@@ -119,6 +119,20 @@
                 <span class="help-block">{{ trans('cruds.user.fields.foto_url_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="unit_id">{{ trans('cruds.user.fields.unit') }}</label>
+                <select class="form-control select2 {{ $errors->has('unit') ? 'is-invalid' : '' }}" name="unit_id" id="unit_id">
+                    @foreach($units as $id => $entry)
+                        <option value="{{ $id }}" {{ old('unit_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('unit'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('unit') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.unit_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

@@ -20,7 +20,7 @@ class PinjamController extends Controller
         abort_if(Gate::denies('pinjam_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Pinjam::with(['kendaraan', 'borrowed_by', 'processed_by', 'created_by'])->select(sprintf('%s.*', (new Pinjam())->table));
+            $query = Pinjam::with(['kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by'])->select(sprintf('%s.*', (new Pinjam())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -105,7 +105,7 @@ class PinjamController extends Controller
 
         $kendaraans = Kendaraan::pluck('plat_no', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'created_by');
+        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by');
 
         return view('admin.pinjams.edit', compact('kendaraans', 'pinjam'));
     }
@@ -121,7 +121,7 @@ class PinjamController extends Controller
     {
         abort_if(Gate::denies('pinjam_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'created_by');
+        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by');
 
         return view('admin.pinjams.show', compact('pinjam'));
     }

@@ -15,6 +15,7 @@ class CreateKendaraansTable extends Migration
             $table->string('jenis');
             $table->string('kondisi');
             $table->string('operasional')->nullable();
+            $table->boolean('is_used')->default(0)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
