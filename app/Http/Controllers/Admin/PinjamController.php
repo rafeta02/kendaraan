@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyPinjamRequest;
 use App\Http\Requests\StorePinjamRequest;
 use App\Http\Requests\UpdatePinjamRequest;
-use App\Models\Driver;
 use App\Models\Kendaraan;
 use App\Models\Pinjam;
 use Gate;
@@ -21,7 +20,7 @@ class PinjamController extends Controller
         abort_if(Gate::denies('pinjam_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Pinjam::with(['kendaraan', 'borrowed_by', 'processed_by', 'driver', 'created_by'])->select(sprintf('%s.*', (new Pinjam())->table));
+            $query = Pinjam::with(['kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by'])->select(sprintf('%s.*', (new Pinjam())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -72,18 +71,11 @@ class PinjamController extends Controller
             $table->editColumn('driver_status', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->driver_status ? 'checked' : null) . '>';
             });
-            $table->addColumn('driver_nama', function ($row) {
-                return $row->driver ? $row->driver->nama : '';
-            });
-
-            $table->editColumn('driver.no_wa', function ($row) {
-                return $row->driver ? (is_string($row->driver) ? $row->driver : $row->driver->no_wa) : '';
-            });
             $table->editColumn('key_status', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->key_status ? 'checked' : null) . '>';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'kendaraan', 'borrowed_by', 'driver_status', 'driver', 'key_status']);
+            $table->rawColumns(['actions', 'placeholder', 'kendaraan', 'borrowed_by', 'driver_status', 'key_status']);
 
             return $table->make(true);
         }
@@ -113,11 +105,9 @@ class PinjamController extends Controller
 
         $kendaraans = Kendaraan::pluck('plat_no', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $drivers = Driver::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by');
 
-        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'created_by');
-
-        return view('admin.pinjams.edit', compact('drivers', 'kendaraans', 'pinjam'));
+        return view('admin.pinjams.edit', compact('kendaraans', 'pinjam'));
     }
 
     public function update(UpdatePinjamRequest $request, Pinjam $pinjam)
@@ -131,7 +121,7 @@ class PinjamController extends Controller
     {
         abort_if(Gate::denies('pinjam_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'created_by');
+        $pinjam->load('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by');
 
         return view('admin.pinjams.show', compact('pinjam'));
     }

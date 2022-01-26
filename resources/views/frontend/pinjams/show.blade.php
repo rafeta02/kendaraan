@@ -122,6 +122,14 @@
                                         <input type="checkbox" disabled="disabled" {{ $pinjam->key_status ? 'checked' : '' }}>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.satpam') }}
+                                    </th>
+                                    <td>
+                                        {{ $pinjam->satpam->nama ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

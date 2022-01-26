@@ -71,7 +71,7 @@ class KendaraanController extends Controller
     {
         abort_if(Gate::denies('kendaraan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $kendaraan->load('drivers', 'unit_kerja', 'kendaraanPeminjamen');
+        $kendaraan->load('drivers', 'unit_kerja', 'kendaraanPinjams');
 
         return view('frontend.kendaraans.show', compact('kendaraan'));
     }

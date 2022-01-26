@@ -56,6 +56,7 @@ class User extends Authenticatable implements HasMedia
         'alamat',
         'no_hp',
         'jwt_token',
+        'unit_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -119,6 +120,11 @@ class User extends Authenticatable implements HasMedia
         }
 
         return $file;
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(SubUnit::class, 'unit_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

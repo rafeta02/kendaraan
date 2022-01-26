@@ -81,6 +81,8 @@ return [
             'foto_url_helper'          => ' ',
             'jwt_token'                => 'Jwt Token',
             'jwt_token_helper'         => ' ',
+            'unit'                     => 'Unit',
+            'unit_helper'              => ' ',
         ],
     ],
     'auditLog' => [
@@ -215,6 +217,8 @@ return [
             'updated_at_helper'  => ' ',
             'deleted_at'         => 'Deleted at',
             'deleted_at_helper'  => ' ',
+            'is_used'            => 'Digunakan',
+            'is_used_helper'     => ' ',
         ],
     ],
     'log' => [
@@ -303,6 +307,8 @@ return [
             'created_by_helper'    => ' ',
             'driver'               => 'Driver',
             'driver_helper'        => ' ',
+            'satpam'               => 'Satpam',
+            'satpam_helper'        => ' ',
         ],
     ],
 ];

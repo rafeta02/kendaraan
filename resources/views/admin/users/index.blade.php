@@ -47,6 +47,9 @@
                         {{ trans('cruds.user.fields.nama') }}
                     </th>
                     <th>
+                        {{ trans('cruds.user.fields.unit') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -109,6 +112,7 @@
 { data: 'roles', name: 'roles.title' },
 { data: 'nip', name: 'nip' },
 { data: 'nama', name: 'nama' },
+{ data: 'unit_nama', name: 'unit.nama' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
