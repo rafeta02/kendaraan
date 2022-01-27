@@ -127,6 +127,14 @@
                             {{ $pinjam->satpam->nama ?? '' }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.pinjam.fields.is_done') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $pinjam->is_done ? 'checked' : '' }}>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
