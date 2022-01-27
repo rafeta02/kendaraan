@@ -310,6 +310,8 @@ return [
             'driver_helper'        => ' ',
             'satpam'               => 'Satpam',
             'satpam_helper'        => ' ',
+            'is_done'              => 'Is DOne',
+            'is_done_helper'       => ' ',
         ],
     ],
 ];

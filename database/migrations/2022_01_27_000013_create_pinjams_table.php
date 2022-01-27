@@ -19,6 +19,7 @@ class CreatePinjamsTable extends Migration
             $table->longText('status_text')->nullable();
             $table->boolean('driver_status')->default(0)->nullable();
             $table->boolean('key_status')->default(0)->nullable();
+            $table->boolean('is_done')->default(0)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

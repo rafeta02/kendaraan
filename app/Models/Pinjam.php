@@ -23,6 +23,7 @@ class Pinjam extends Model
         // 'diterima' => 'Diterima',
         'dipinjam' => 'Dipinjam',
         'selesai'  => 'Selesai',
+        'ditolak'  => 'Ditolak',
     ];
 
     public const STATUS_BACKGROUND = [
@@ -61,6 +62,7 @@ class Pinjam extends Model
         'key_status',
         'satpam_id',
         'created_at',
+        'is_done',
         'updated_at',
         'deleted_at',
         'created_by_id',
