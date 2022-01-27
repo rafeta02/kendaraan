@@ -88,4 +88,9 @@ class Kendaraan extends Model
         $no_po = implode('-', $matches[0]);
         return $no_po. ' - '. Str::title($this->attributes['jenis']).' - '.Str::title($this->attributes['merk']);
     }
+
+    public function peminjaman()
+    {
+        return $this->hasOne(Pinjam::class, 'kendaraan_id', 'id')->whereNull('date_return');
+    }
 }

@@ -6,7 +6,8 @@
     </div>
 
     <div class="card-body">
-        <form method="GET" action="{{ route("admin.process.index") }}" enctype="multipart/form-data">
+        <form id="filterForm">
+        {{-- <form method="GET" action="{{ route("admin.process.index") }}" enctype="multipart/form-data"> --}}
             <div class="row">
                 <div class="form-group col-6">
                     <label class="required" for="date_start">{{ trans('cruds.pinjam.fields.date_start') }}</label>
@@ -45,7 +46,7 @@
                 <span class="help-block">{{ trans('cruds.pinjam.fields.status_helper') }}</span>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" type="submit">
+                <button class="btn btn-primary" type="submit" id="filterBtn">
                     {{ trans('global.filter') }}
                 </button>
             </div>
@@ -67,6 +68,9 @@
                     </th>
                     <th>
                         Pengaju
+                    </th>
+                    <th>
+                        Tanggal Pengajuan
                     </th>
                     <th>
                         {{ trans('cruds.pinjam.fields.waktu_peminjaman') }}
@@ -98,7 +102,7 @@
                     <div class="form-group">
                         <label for="driver" class="col-sm-2 control-label">Driver</label>
                         <div class="col-sm-12">
-                            <select class="form-control select2" name="driver" id="driverSelect">
+                            <select class="form-control select2" name="driver_id" id="driverSelect">
                                 @foreach($drivers as $id => $entry)
                                     <option value="{{ $id }}">{{ $entry }}</option>
                                 @endforeach
@@ -127,12 +131,20 @@ $(function () {
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.process.index') }}",
+    ajax: {
+        url: "{{ route('admin.process.index') }}",
+        data: function(data) {
+            data.date_start = $('#date_start').val(),
+            data.date_end = $('#date_end').val(),
+            data.status = $('#status').val()
+        }
+    },
     columns: [
         { data: 'placeholder', name: 'placeholder' },
         { data: 'kendaraan.plat_no', name: 'kendaraan.plat_no' },
         { data: 'kendaraan.merk', name: 'kendaraan.merk' },
         { data: 'borrowed_by_name', name: 'borrowed_by_name' },
+        { data: 'tanggal_pengajuan', name: 'tanggal_pengajuan' },
         { data: 'waktu_peminjaman', name: 'waktu_peminjaman' },
         { data: 'reason', name: 'reason' },
         { data: 'status', name: 'status' },
@@ -195,7 +207,6 @@ $(function () {
             },
             success: function (response) {
                 if (response.status == 'success') {
-                    console.log(response.data.pinjam.reason);
                     let pinjam = response.data.pinjam;
                     $('#pinjam_id').val(pinjam.id);
                     $('#driverModal').modal('show');
@@ -214,17 +225,122 @@ $(function () {
           url: "{{ route('admin.process.saveDriver') }}",
           type: "POST",
           dataType: 'json',
-          success: function (data) {
-              $('#driverForm').trigger("reset");
-              $('#driverModal').modal('hide');
-              table.ajax.reload();
+          success: function (response) {
+            if (response.status == 'success') {
+                $('#driverForm').trigger("reset");
+                $('#driverModal').modal('hide');
+                table.ajax.reload();
+                swal("Success", response.message, 'success');
+            } else {
+                $('#assignBtn').html('Assign');
+                swal("Warning!", response.message, 'error');
+            }
+
           },
-          error: function (data) {
-              console.log('Error:', data);
-              $('#saveBtn').html('Save Changes');
+          error: function (response) {
+              $('#assignBtn').html('Assign');
           }
       });
     });
+
+    $('body').on('click', '.button-satpam', function () {
+        event.preventDefault();
+        const id = $(this).data('id');
+        swal({
+            title: 'Apakah ingin memberitahu Satpam ?',
+            text: 'Kunci mobil akan dititipkan ke Satpam',
+            icon: 'warning',
+            buttons: ["Cancel", "Yes!"],
+            showSpinner: true
+        }).then(function(value) {
+            if (value) {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.process.sendSatpam') }}",
+                    data: {
+                        id: id
+                    },
+                    success: function (response) {
+                        if (response.status == 'success') {
+                            response.data.satpam.forEach(element => {
+                                window.open(element.link_wa, '_blank');
+                            });
+                            table.ajax.reload();
+                            swal("Success", response.message, "success");
+                        } else {
+                            swal("Warning!", response.message, 'error');
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    $('body').on('click', '.button-dipinjam', function () {
+        event.preventDefault();
+        const id = $(this).data('id');
+        swal({
+            title: 'Apakah kendaraan sudah dipinjam ?',
+            text: 'Kendaraan telah dipinjam oleh pengaju',
+            icon: 'warning',
+            buttons: ["Cancel", "Yes!"],
+            showSpinner: true
+        }).then(function(value) {
+            if (value) {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.process.borrowed') }}",
+                    data: {
+                        id: id
+                    },
+                    success: function (response) {
+                        if (response.status == 'success') {
+                            table.ajax.reload();
+                            swal("Success", response.message, "success");
+                        } else {
+                            swal("Warning!", response.message, 'error');
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    $('body').on('click', '.button-selesai', function () {
+        event.preventDefault();
+        const id = $(this).data('id');
+        swal({
+            title: 'Apakah kendaraan telah dikembalikan ?',
+            text: 'Kendaraan telah dikembalikan oleh pengaju',
+            icon: 'warning',
+            buttons: ["Cancel", "Yes!"],
+            showSpinner: true
+        }).then(function(value) {
+            if (value) {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.process.done') }}",
+                    data: {
+                        id: id
+                    },
+                    success: function (response) {
+                        if (response.status == 'success') {
+                            table.ajax.reload();
+                            swal("Success", response.message, "success");
+                        } else {
+                            swal("Warning!", response.message, 'error');
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    $( "#filterForm" ).submit(function( event ) {
+        event.preventDefault();
+        table.ajax.reload();
+    });
+
 });
 
 

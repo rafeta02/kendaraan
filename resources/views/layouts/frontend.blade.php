@@ -77,6 +77,12 @@
 
                                     <a class="dropdown-item" href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
 
+                                    @can('kendaraan_access')
+                                        <a class="dropdown-item" href="{{ route('frontend.kendaraans.index') }}">
+                                            {{ trans('cruds.kendaraan.title') }}
+                                        </a>
+                                    @endcan
+
                                     @can('pinjam_access')
                                         <a class="dropdown-item" href="{{ route('frontend.pinjams.index') }}">
                                             {{ trans('cruds.pinjam.title') }}

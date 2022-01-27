@@ -197,7 +197,7 @@ return [
         'fields'         => [
             'id'                 => 'ID',
             'id_helper'          => ' ',
-            'plat_no'            => 'No Kendaraan',
+            'plat_no'            => 'No Polisi',
             'plat_no_helper'     => ' ',
             'merk'               => 'Seri dan Merk',
             'merk_helper'        => ' ',

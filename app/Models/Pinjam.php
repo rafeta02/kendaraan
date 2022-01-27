@@ -29,7 +29,7 @@ class Pinjam extends Model
         'diajukan' => 'primary',
         'diproses' => 'warning',
         // 'diterima' => 'secondary',
-        'dipinjam' => 'success',
+        'dipinjam' => 'danger',
         'selesai'  => 'dark',
     ];
 
@@ -161,5 +161,10 @@ class Pinjam extends Model
         }
 
         return Carbon::parse($this->attributes['date_return'])->format('d F Y');
+    }
+
+    public function gettanggalPengajuanAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->format('d F Y');
     }
 }

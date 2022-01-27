@@ -31,8 +31,15 @@ class Satpam extends Model
         'deleted_at',
     ];
 
+    protected $appends = ['link_wa'];
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function getLinkWaAttribute()
+    {
+        return 'https://wa.me/'.$this->attributes['no_wa'].'?text=Titip%20kunci%20lurd';
     }
 }

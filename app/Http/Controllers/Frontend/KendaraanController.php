@@ -16,15 +16,44 @@ use Symfony\Component\HttpFoundation\Response;
 
 class KendaraanController extends Controller
 {
-    use CsvImportTrait;
-
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('kendaraan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $kendaraans = Kendaraan::with(['drivers', 'unit_kerja'])->get();
+        $unit_kerjas = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.kendaraans.index', compact('kendaraans'));
+        $query = Kendaraan::with(['unit_kerja', 'peminjaman']);
+        if ($request->jenis) {
+            $query->where('jenis', $request->jenis);
+        }
+
+        if ($request->used) {
+            $query->where('is_used', ($request->used === 'used' ? 1 : 0));
+        }
+
+        if ($request->plat_no) {
+            $query->where('plat_no','LIKE','%'.$request->plat_no.'%');
+        }
+
+        if ($request->merk) {
+            $query->where('merk','LIKE','%'.$request->merk.'%');
+        }
+
+        if ($request->unit_kerja_id) {
+            $query->where('unit_kerja_id', $request->unit_kerja_id);
+        }
+
+        // if ($request->status) {
+        //     $query->whereHas('peminjaman', function($query) use ($request)  {
+        //         $query->where('status', $request->status);
+        //     });
+        // }
+
+        $kendaraans = $query->get();
+
+        session()->flashInput($request->input());
+
+        return view('frontend.kendaraans.index', compact('kendaraans', 'unit_kerjas'));
     }
 
     public function create()

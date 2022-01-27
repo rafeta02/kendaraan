@@ -252,6 +252,28 @@ class PermissionsTableSeeder extends Seeder
             ],
         ];
 
+        $mypermissions = [
+            [
+                'title' => 'process_access',
+            ],
+            [
+                'title' => 'process_accept',
+            ],
+            [
+                'title' => 'process_driver',
+            ],
+            [
+                'title' => 'process_satpam',
+            ],
+            [
+                'title' => 'process_dipinjam',
+            ],
+            [
+                'title' => 'process_selesai',
+            ],
+        ];
+
         Permission::insert($permissions);
+        Permission::insert($myPermissions);
     }
 }

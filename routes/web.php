@@ -72,6 +72,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('process/accept', 'AdminAccController@acceptPengajuan')->name('process.accept');
     Route::get('process/choose-driver', 'AdminAccController@chooseDriver')->name('process.chooseDriver');
     Route::post('process/save-driver', 'AdminAccController@saveDriver')->name('process.saveDriver');
+    Route::post('process/send-satpam', 'AdminAccController@sendSatpam')->name('process.sendSatpam');
+    Route::post('process/borrowed', 'AdminAccController@telahDipinjam')->name('process.borrowed');
+    Route::post('process/done', 'AdminAccController@selesai')->name('process.done');
     Route::resource('process', 'AdminAccController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');

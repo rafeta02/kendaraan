@@ -79,19 +79,23 @@
                                                 </a>
                                             @endcan
 
-                                            @can('pinjam_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.pinjams.edit', $pinjam->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
+                                            @if($pinjam->status == 'diajukan')
+                                                @can('pinjam_edit')
+                                                    <a class="btn btn-xs btn-info" href="{{ route('frontend.pinjams.edit', $pinjam->id) }}">
+                                                        {{ trans('global.edit') }}
+                                                    </a>
+                                                @endcan
+                                            @endif
 
-                                            @can('pinjam_delete')
-                                                <form action="{{ route('frontend.pinjams.destroy', $pinjam->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
+                                            @if($pinjam->status == 'diajukan')
+                                                @can('pinjam_delete')
+                                                    <form action="{{ route('frontend.pinjams.destroy', $pinjam->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                    </form>
+                                                @endcan
+                                            @endif
 
                                         </td>
 
@@ -110,7 +114,7 @@
 @section('scripts')
 @parent
 <script>
-    $(function () {
+$(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('pinjam_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'

@@ -3,80 +3,133 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @can('kendaraan_create')
-                <div style="margin-bottom: 10px;" class="row">
-                    <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.kendaraans.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.kendaraan.title_singular') }}
-                        </a>
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                            {{ trans('global.app_csvImport') }}
-                        </button>
-                        @include('csvImport.modal', ['model' => 'Kendaraan', 'route' => 'admin.kendaraans.parseCsvImport'])
-                    </div>
-                </div>
-            @endcan
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.kendaraan.title_singular') }} {{ trans('global.list') }}
                 </div>
+                <div class="card-body">
+                    <form method="GET" action="{{ route("frontend.kendaraans.index") }}" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="plat_no">{{ trans('cruds.kendaraan.fields.plat_no') }}</label>
+                                <input class="form-control" type="text" name="plat_no" id="plat_no" value="{{ old('plat_no', '') }}">
+                                @if($errors->has('plat_no'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('plat_no') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.kendaraan.fields.plat_no_helper') }}</span>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="merk">{{ trans('cruds.kendaraan.fields.merk') }}</label>
+                                <input class="form-control" type="text" name="merk" id="merk" value="{{ old('merk', '') }}">
+                                @if($errors->has('merk'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('merk') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.kendaraan.fields.merk_helper') }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label>{{ trans('cruds.kendaraan.fields.jenis') }}</label>
+                                <select class="form-control" name="jenis" id="jenis">
+                                    <option value disabled {{ old('jenis', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                    @foreach(App\Models\Kendaraan::JENIS_SELECT as $key => $label)
+                                        <option value="{{ $key }}" {{ old('jenis', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('jenis'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('jenis') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.kendaraan.fields.jenis_helper') }}</span>
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Available</label>
+                                <select class="form-control" name="used" id="used">
+                                    <option value disabled {{ old('used', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                    <option value="nope" {{ old('used') === 'nope' ? 'selected' : '' }}>Available</option>
+                                    <option value="used" {{ old('used') === 'used' ? 'selected' : '' }}>Dipinjam</option>
 
+                                </select>
+                                @if($errors->has('used'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('used') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.kendaraan.fields.jenis_helper') }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <label for="unit_kerja_id">{{ trans('cruds.kendaraan.fields.unit_kerja') }}</label>
+                                <select class="form-control select2" name="unit_kerja_id" id="unit_kerja_id">
+                                    @foreach($unit_kerjas as $id => $entry)
+                                        <option value="{{ $id }}" {{ old('unit_kerja_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('unit_kerja'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('unit_kerja') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.kendaraan.fields.unit_kerja_helper') }}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <button class="btn btn-primary" type="submit">
+                                Cari
+                            </button>
+                        </div>
+                    </form>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class=" table table-bordered table-striped table-hover datatable datatable-Kendaraan">
                             <thead>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.kendaraan.fields.id') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.kendaraan.fields.plat_no') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.kendaraan.fields.merk') }}
+                                        Kendaraan
                                     </th>
                                     <th>
-                                        {{ trans('cruds.kendaraan.fields.jenis') }}
+                                        Operasional
                                     </th>
                                     <th>
-                                        {{ trans('cruds.kendaraan.fields.operasional') }}
+                                        Status
                                     </th>
-                                    <th>
-                                        {{ trans('cruds.kendaraan.fields.unit_kerja') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.subUnit.fields.slug') }}
-                                    </th>
-                                    <th>
+                                    {{-- <th>
                                         &nbsp;
-                                    </th>
+                                    </th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($kendaraans as $key => $kendaraan)
                                     <tr data-entry-id="{{ $kendaraan->id }}">
                                         <td>
-                                            {{ $kendaraan->id ?? '' }}
-                                        </td>
-                                        <td>
                                             {{ $kendaraan->plat_no ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $kendaraan->merk ?? '' }}
+                                            {{ $kendaraan->no_nama ?? '' }}
                                         </td>
                                         <td>
-                                            {{ App\Models\Kendaraan::JENIS_SELECT[$kendaraan->jenis] ?? '' }}
+                                            {{ App\Models\Kendaraan::OPERASIONAL_SELECT[$kendaraan->operasional] ?? '' }}<br>
+                                            ({{ $kendaraan->unit_kerja->nama ?? '' }})
                                         </td>
-                                        <td>
-                                            {{ App\Models\Kendaraan::OPERASIONAL_SELECT[$kendaraan->operasional] ?? '' }}
+                                        <td class="text-center">
+                                            @if ($kendaraan->peminjaman)
+                                                <span class="text-left badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$kendaraan->peminjaman->status] ?? '' }}"> Peminjaman oleh "{{ $kendaraan->peminjaman->borrowed_by->name }}"<br> Status : {{ App\Models\Pinjam::STATUS_SELECT[$kendaraan->peminjaman->status] ?? '' }}</span>
+                                            @else
+                                                <span class="badge badge-success">Available</span>
+                                            @endif
                                         </td>
-                                        <td>
-                                            {{ $kendaraan->unit_kerja->nama ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $kendaraan->unit_kerja->slug ?? '' }}
-                                        </td>
-                                        <td>
+                                        {{-- <td>
                                             @can('kendaraan_show')
                                                 <a class="btn btn-xs btn-primary" href="{{ route('frontend.kendaraans.show', $kendaraan->id) }}">
                                                     {{ trans('global.view') }}
@@ -97,8 +150,7 @@
                                                 </form>
                                             @endcan
 
-                                        </td>
-
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -114,37 +166,8 @@
 @section('scripts')
 @parent
 <script>
-    $(function () {
+$(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('kendaraan_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('frontend.kendaraans.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
@@ -156,7 +179,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
