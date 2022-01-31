@@ -97,8 +97,8 @@
                 <h4 class="modal-title">Please choose driver</h4>
             </div>
             <div class="modal-body">
-                <form id="driverForm" name="driverForm" class="form-horizontal">
-                   <input type="hidden" name="pinjam_id" id="pinjam_id">
+                <form id="driverForm" class="form-horizontal">
+                   <input type="hidden" name="pinjam_id" id="driver_pinjam_id">
                     <div class="form-group">
                         <label for="driver" class="col-sm-2 control-label">Driver</label>
                         <div class="col-sm-12">
@@ -112,6 +112,31 @@
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" id="assignBtn" value="save">Assign</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rejectionModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Reason Rejection</h4>
+            </div>
+            <div class="modal-body">
+                <form id="rejectionForm" class="form-horizontal">
+                   <input type="hidden" name="pinjam_id" id="rejection_pinjam_id">
+                    <div class="form-group">
+                        <label for="driver" class="col-sm-2 control-label">Reason</label>
+                        <div class="col-sm-12">
+                            <textarea class="form-control ckeditor" name="reason_rejection" id="reason_rejection"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger" id="rejectionBtn" value="save">Reject</button>
                     </div>
                 </form>
             </div>
@@ -199,22 +224,72 @@ $(function () {
     $('body').on('click', '.button-driver', function () {
         event.preventDefault();
         const id = $(this).data('id');
-        $.ajax({
-            type: "GET",
-            url: "{{ route('admin.process.chooseDriver') }}",
-            data: {
-                id: id
-            },
-            success: function (response) {
-                if (response.status == 'success') {
-                    let pinjam = response.data.pinjam;
-                    $('#pinjam_id').val(pinjam.id);
-                    $('#driverModal').modal('show');
-                } else {
-                    swal("Warning!", response.message, 'error');
+        $('#driver_pinjam_id').val(id);
+        $('#driverModal').modal('show');
+        // $.ajax({
+        //     type: "GET",
+        //     url: "{{ route('admin.process.chooseDriver') }}",
+        //     data: {
+        //         id: id
+        //     },
+        //     success: function (response) {
+        //         if (response.status == 'success') {
+        //             let pinjam = response.data.pinjam;
+        //             $('#driver_pinjam_id').val(pinjam.id);
+        //             $('#driverModal').modal('show');
+        //         } else {
+        //             swal("Warning!", response.message, 'error');
+        //         }
+        //     }
+        // })
+    });
+    $('body').on('click', '.button-reject', function () {
+        event.preventDefault();
+        console.log('celicked');
+        const id = $(this).data('id');
+        $('#rejection_pinjam_id').val(id);
+        $('#rejectionModal').modal('show');
+    });
+
+    $('#rejectionBtn').click(function (e) {
+        e.preventDefault();
+        if (!$.trim($("#reason_rejection").val())) {
+            swal("Warning!", 'Reason is empty', 'error');
+            return;
+        } else {
+            swal({
+            title: 'Apakah pengajuan akan ditolak ?',
+            text: 'Pengajuan peminjaman kendaraan akan ditolak',
+            icon: 'warning',
+            buttons: ["Cancel", "Yes!"],
+            showSpinner: true
+            }).then(function(value) {
+                if (value) {
+                    $(this).html('Sending..');
+                    $.ajax({
+                        data: $('#rejectionForm').serialize(),
+                        url: "{{ route('admin.process.reject') }}",
+                        type: "POST",
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status == 'success') {
+                                $('#rejectionForm').trigger("reset");
+                                $('#rejectionModal').modal('hide');
+                                table.ajax.reload();
+                                swal("Success", response.message, 'success');
+                            } else {
+                                $('#rejectionBtn').html('Reject');
+                                swal("Warning!", response.message, 'error');
+                            }
+
+                        },
+                        error: function (response) {
+                            $('#assignBtn').html('Assign');
+                        }
+                    });
                 }
-            }
-        })
+            });
+        }
     });
 
     $('#assignBtn').click(function (e) {

@@ -122,9 +122,17 @@
                                             {{ App\Models\Kendaraan::OPERASIONAL_SELECT[$kendaraan->operasional] ?? '' }}<br>
                                             ({{ $kendaraan->unit_kerja->nama ?? '' }})
                                         </td>
-                                        <td class="text-center">
-                                            @if ($kendaraan->peminjaman)
-                                                <span class="text-left badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$kendaraan->peminjaman->status] ?? '' }}"> Peminjaman oleh "{{ $kendaraan->peminjaman->borrowed_by->name }}"<br> Status : {{ App\Models\Pinjam::STATUS_SELECT[$kendaraan->peminjaman->status] ?? '' }}</span>
+                                        <td class="justify-content-center align-items-center">
+                                            @if ($kendaraan->peminjaman->count() > 0)
+                                                <ul>
+                                                    @foreach ($kendaraan->peminjaman as $peminjaman)
+                                                        <li>
+                                                            <span class="text-left badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$peminjaman->status] ?? '' }}"> Peminjaman oleh "{{ $peminjaman->borrowed_by->name }}" <br> Untuk tanggal {{ $peminjaman->waktu_peminjaman }} <br> Status : {{ App\Models\Pinjam::STATUS_SELECT[$peminjaman->status] ?? '' }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+
+                                                {{-- <span class="text-left badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$kendaraan->peminjaman->status] ?? '' }}"> Peminjaman oleh "{{ $kendaraan->peminjaman->borrowed_by->name }}"<br> Status : {{ App\Models\Pinjam::STATUS_SELECT[$kendaraan->peminjaman->status] ?? '' }}</span> --}}
                                             @else
                                                 <span class="badge badge-success">Available</span>
                                             @endif

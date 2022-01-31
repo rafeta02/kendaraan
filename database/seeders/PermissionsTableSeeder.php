@@ -274,6 +274,6 @@ class PermissionsTableSeeder extends Seeder
         ];
 
         Permission::insert($permissions);
-        Permission::insert($myPermissions);
+        Permission::insert($mypermissions);
     }
 }

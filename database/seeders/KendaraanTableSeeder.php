@@ -17,6 +17,7 @@ class KendaraanTableSeeder extends Seeder
     public function run()
     {
         $unit = SubUnit::where('slug', 'bagian-tata-usaha-lppm')->first();
+        $dih = SubUnit::where('slug', 'bagian-tata-usaha-lppm')->first();
         $kendaraan = [
             [
                 'plat_no'           => 'AD1048XA',
@@ -35,12 +36,52 @@ class KendaraanTableSeeder extends Seeder
                 'unit_kerja_id'     => $unit->id,
             ],
             [
-                'plat_no'           => 'AD9990 CA',
+                'plat_no'           => 'AD9990CA',
                 'merk'              => 'HONDA SUPRA 125',
                 'jenis'             => 'motor',
                 'kondisi'           => 'layak',
                 'operasional'       => 'unit',
                 'unit_kerja_id'     => $unit->id,
+            ],
+            [
+                'plat_no'           => 'AD1148XA',
+                'merk'              => 'AVANZA',
+                'jenis'             => 'mobil',
+                'kondisi'           => 'layak',
+                'operasional'       => 'unit',
+                'unit_kerja_id'     => SubUnit::where('slug', 'bagian-biro-riset-dan-pengabdian-kepada-masyarakat')->first()->id,
+            ],
+            [
+                'plat_no'           => 'AD1629HX',
+                'merk'              => 'HILUX',
+                'jenis'             => 'mobil',
+                'kondisi'           => 'layak',
+                'operasional'       => 'unit',
+                'unit_kerja_id'     => SubUnit::where('slug', 'bagian-biro-riset-dan-pengabdian-kepada-masyarakat')->first()->id,
+            ],
+            [
+                'plat_no'           => 'AD1146XA',
+                'merk'              => 'AVANZA',
+                'jenis'             => 'mobil',
+                'kondisi'           => 'layak',
+                'operasional'       => 'unit',
+                'unit_kerja_id'     => SubUnit::where('slug', 'bagian-direkrorat-inovasi-dan-hilirisasi')->first()->id,
+            ],
+            [
+                'plat_no'           => 'AD9822GA',
+                'merk'              => 'TRALL HONDA CRF 150cc',
+                'jenis'             => 'motor',
+                'kondisi'           => 'layak',
+                'operasional'       => 'unit',
+                'unit_kerja_id'     => SubUnit::where('slug', 'upt-pendidikan-dan-pelatihan-kehutanan')->first()->id,
+            ],
+            [
+                'plat_no'           => 'AD6144XH',
+                'merk'              => 'TRALL HONDA CRF 150cc',
+                'jenis'             => 'motor',
+                'kondisi'           => 'layak',
+                'operasional'       => 'unit',
+                'unit_kerja_id'     => SubUnit::where('slug', 'upt-pendidikan-dan-pelatihan-kehutanan')->first()->id,
             ],
         ];
 

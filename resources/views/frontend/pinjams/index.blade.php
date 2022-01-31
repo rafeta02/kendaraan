@@ -60,6 +60,8 @@
                                         <td>
                                             @if($pinjam->status == 'selesai')
                                                  <span class="badge badge-dark">Dikembalikan {{ $pinjam->date_return_formatted }}</span>
+                                            @elseif ($pinjam->status == 'ditolak')
+                                                <span class="badge badge-dark">Ditolak dg alasan :<br>({{ $pinjam->status_text }})</span>
                                             @else
                                                 <span class="badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$pinjam->status] ?? '' }}">{{ App\Models\Pinjam::STATUS_SELECT[$pinjam->status] ?? '' }}</span>
                                             @endif

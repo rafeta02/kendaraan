@@ -32,6 +32,7 @@ class Pinjam extends Model
         // 'diterima' => 'secondary',
         'dipinjam' => 'danger',
         'selesai'  => 'dark',
+        'ditolak'  => 'dark',
     ];
 
     public $table = 'pinjams';

@@ -67,6 +67,8 @@ class AdminAccController extends Controller
             $table->editColumn('status', function ($row) {
                 if ($row->status == 'selesai') {
                     return '<span class="badge badge-dark">Dikembalikan :<br>'. $row->date_return_formatted. '</span>';
+                } else if ($row->status == 'ditolak') {
+                    return '<span class="badge badge-dark">Ditolak dg alasan :<br>('. $row->status_text. ')</span>';
                 } else {
                     if ($row->status == 'diproses') {
                         $status = '<span class="badge badge-'.Pinjam::STATUS_BACKGROUND[$row->status].'">'.Pinjam::STATUS_SELECT[$row->status].'</span>';
@@ -269,10 +271,13 @@ class AdminAccController extends Controller
                     'log' => 'Peminjaman kendaraan '. $data->kendaraan->no_nama. ' Proses telah diselesaikan oleh "'. auth()->user()->name .'" Dan telah dipinjam kan ke ' .$data->borrowed_by->name.', Untuk tanggal '. $data->WaktuPeminjaman . ' Dengan keperluan "' . $data->reason .'"',
                 ]);
 
+                $kendaraan = Kendaraan::find($data->kendaraan_id);
+                $kendaraan->is_used = 1;
+                $kendaraan->save();
+
                 $data->save();
             });
 
-            $satpams = Satpam::all();
             return response()->json(['status' => 'success', 'message' => 'Kendaraan telah dipinjamkan']);
         } catch (Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
@@ -285,6 +290,7 @@ class AdminAccController extends Controller
             DB::transaction(function() use ($request) {
                 $data = Pinjam::find($request->id);
                 $data->status = 'selesai';
+                $data->is_done = 1;
                 $data->date_return = Carbon::now()->format('Y-m-d');
                 $data->status_text = 'Peminjaman kendaraan "'.$data->kendaraan->no_nama .'" Telah dikembalikan dan Proses telah diselesaikan oleh "'. auth()->user()->name.", Peminjaman Selesai.";
 
@@ -296,11 +302,39 @@ class AdminAccController extends Controller
                     'log' => 'Peminjaman kendaraan '. $data->kendaraan->no_nama. ' Telah dikembalikan dan Proses telah diselesaikan oleh "'. auth()->user()->name .'" Untuk tanggal '. $data->WaktuPeminjaman . ' Dengan keperluan "' . $data->reason .'", Peminjaman Selesai.',
                 ]);
 
+                $kendaraan = Kendaraan::find($data->kendaraan_id);
+                $kendaraan->is_used = 0;
+                $kendaraan->save();
+
+                $data->save();
+            });
+            return response()->json(['status' => 'success', 'message' => 'Kendaraan telah telah dikembalikan dan peminjaman selesai']);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function reject(Request $request)
+    {
+        try {
+            DB::transaction(function() use ($request) {
+                $data = Pinjam::find($request->pinjam_id);
+                $data->status = 'ditolak';
+                $data->is_done = 1;
+                $data->status_text = $request->reason_rejection;
+
+                $log = LogPeminjaman::create([
+                    'peminjaman_id' => $data->id,
+                    'kendaraan_id' => $data->kendaraan_id,
+                    'peminjam_id' => $data->borrowed_by_id,
+                    'jenis' => 'ditolak',
+                    'log' => 'Peminjaman kendaraan '. $data->kendaraan->no_nama. ' untuk tanggal '. $data->WaktuPeminjaman . ' telah ditolak oleh "'. auth()->user()->name .'" dengan alasan '. $data->status_text .'", Peminjaman ditolak.',
+                ]);
+
                 $data->save();
             });
 
-            $satpams = Satpam::all();
-            return response()->json(['status' => 'success', 'message' => 'Kendaraan telah telah dikembalikan dan peminjaman selesai']);
+            return response()->json(['status' => 'success', 'message' => 'Peminjaman telah ditolak']);
         } catch (Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }

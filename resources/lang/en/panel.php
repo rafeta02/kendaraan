@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'Aplikasi Peminjaman Kendaraan',
+    'site_title' => 'Portal Peminjaman Kendaraan',
 ];

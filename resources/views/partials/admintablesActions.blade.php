@@ -2,6 +2,9 @@
     @can('process_accept')
     <button class="btn btn-xs btn-success button-accept" data-id="{{ $row->id }}">Accept</button>
     @endcan
+    @can('process_accept')
+    <button class="btn btn-xs btn-danger button-reject" data-id="{{ $row->id }}">Reject</button>
+    @endcan
 @elseif ($row->status == 'diproses')
     @if ($row->kendaraan->jenis == 'mobil' && $row->driver_status == 0)
         @can('process_driver')

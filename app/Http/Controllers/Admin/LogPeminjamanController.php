@@ -53,6 +53,13 @@ class LogPeminjamanController extends Controller
             $table->addColumn('peminjaman_reason', function ($row) {
                 return $row->peminjaman ? $row->peminjaman->reason : '';
             });
+            $table->addColumn('kendaraan_no_nama', function ($row) {
+                return $row->kendaraan ? $row->kendaraan->no_nama : '';
+            });
+
+            $table->editColumn('peminjaman.id', function ($row) {
+                return $row->peminjaman ? ('ID: <h5>'. $row->peminjaman->id .'</h5>Created at:<br> <b>'.$row->created_at.'</b>') : '';
+            });
 
             $table->editColumn('peminjaman.date_start', function ($row) {
                 return $row->peminjaman ? (is_string($row->peminjaman) ? $row->peminjaman : $row->peminjaman->date_start) : '';
@@ -75,7 +82,11 @@ class LogPeminjamanController extends Controller
                 return $row->jenis ? LogPeminjaman::JENIS_SELECT[$row->jenis] : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'peminjaman', 'kendaraan', 'peminjam']);
+            $table->editColumn('log', function ($row) {
+                return $row->log ? $row->log : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'peminjaman', 'kendaraan', 'peminjam', 'peminjaman.id']);
 
             return $table->make(true);
         }

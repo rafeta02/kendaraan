@@ -75,6 +75,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('process/send-satpam', 'AdminAccController@sendSatpam')->name('process.sendSatpam');
     Route::post('process/borrowed', 'AdminAccController@telahDipinjam')->name('process.borrowed');
     Route::post('process/done', 'AdminAccController@selesai')->name('process.done');
+    Route::post('process/reject', 'AdminAccController@reject')->name('process.reject');
     Route::resource('process', 'AdminAccController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');

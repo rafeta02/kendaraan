@@ -17,12 +17,12 @@ class LogPeminjaman extends Model implements HasMedia
     use HasFactory;
 
     public const JENIS_SELECT = [
-        'diajukan'     => 'Diajukan',
-        'diproses'     => 'Diproses',
-        'disetujui'    => 'Disetujui',
-        'dipinjam'     => 'Dipinjam',
-        'ditolak'      => 'Ditolak',
-        'dikembalikan' => 'Dikembalikan',
+        'diajukan' => 'Diajukan',
+        'diproses' => 'Diproses',
+        // 'diterima' => 'Diterima',
+        'dipinjam' => 'Dipinjam',
+        'selesai'  => 'Selesai',
+        'ditolak'  => 'Ditolak',
     ];
 
     public $table = 'log_peminjamen';

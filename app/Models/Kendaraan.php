@@ -91,6 +91,7 @@ class Kendaraan extends Model
 
     public function peminjaman()
     {
-        return $this->hasOne(Pinjam::class, 'kendaraan_id', 'id')->whereNull('date_return');
+        // return $this->hasOne(Pinjam::class, 'kendaraan_id', 'id')->where('is_done', 0);
+        return $this->hasMany(Pinjam::class, 'kendaraan_id', 'id')->where('is_done', 0);
     }
 }
