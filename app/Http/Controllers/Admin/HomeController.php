@@ -96,6 +96,42 @@ class HomeController
 
         $chart3 = new LaravelChart($settings3);
 
-        return view('home', compact('chart3', 'settings1', 'settings2'));
+        $settings4 = [
+            'chart_title'           => 'Latest Peminjaman',
+            'chart_type'            => 'latest_entries',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\Pinjam',
+            'group_by_field'        => 'date_start',
+            'group_by_period'       => 'day',
+            'aggregate_function'    => 'count',
+            'filter_field'          => 'created_at',
+            'group_by_field_format' => 'Y-m-d',
+            'column_class'          => 'col-md-12',
+            'entries_number'        => '10',
+            'fields'                => [
+                'kendaraan'     => 'plat_no',
+                'date_start'    => '',
+                'date_end'      => '',
+                'reason'        => '',
+                'borrowed_by'   => 'name',
+                'driver_status' => '',
+                'key_status'    => '',
+                'is_done'       => '',
+            ],
+            'translation_key' => 'pinjam',
+        ];
+
+        $settings4['data'] = [];
+        if (class_exists($settings4['model'])) {
+            $settings4['data'] = $settings4['model']::latest()
+                ->take($settings4['entries_number'])
+                ->get();
+        }
+
+        if (!array_key_exists('fields', $settings4)) {
+            $settings4['fields'] = [];
+        }
+
+        return view('home', compact('chart3', 'settings1', 'settings2', 'settings4'));
     }
 }
