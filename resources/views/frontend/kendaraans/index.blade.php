@@ -48,10 +48,10 @@
                                 <span class="help-block">{{ trans('cruds.kendaraan.fields.jenis_helper') }}</span>
                             </div>
                             <div class="form-group col-6">
-                                <label>Available</label>
+                                <label>Apakah tersedia ?</label>
                                 <select class="form-control" name="used" id="used">
                                     <option value disabled {{ old('used', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                    <option value="nope" {{ old('used') === 'nope' ? 'selected' : '' }}>Available</option>
+                                    <option value="nope" {{ old('used') === 'nope' ? 'selected' : '' }}>Tersedia</option>
                                     <option value="used" {{ old('used') === 'used' ? 'selected' : '' }}>Dipinjam</option>
 
                                 </select>
@@ -134,7 +134,7 @@
 
                                                 {{-- <span class="text-left badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$kendaraan->peminjaman->status] ?? '' }}"> Peminjaman oleh "{{ $kendaraan->peminjaman->borrowed_by->name }}"<br> Status : {{ App\Models\Pinjam::STATUS_SELECT[$kendaraan->peminjaman->status] ?? '' }}</span> --}}
                                             @else
-                                                <span class="badge badge-success">Available</span>
+                                                <span class="badge badge-success">Tersedia</span>
                                             @endif
                                         </td>
                                         {{-- <td>

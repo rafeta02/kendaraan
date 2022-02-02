@@ -38,7 +38,7 @@
                             <div class="card-box bg-orange">
                                 <div class="inner">
                                     <h3> {{ $available }} </h3>
-                                    <p> Kendaraan Available </p>
+                                    <p> Kendaraan Tersedia </p>
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-truck" aria-hidden="true"></i>
