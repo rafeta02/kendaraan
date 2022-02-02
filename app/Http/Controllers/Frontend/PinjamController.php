@@ -25,11 +25,15 @@ class PinjamController extends Controller
         return view('frontend.pinjams.index', compact('pinjams'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         abort_if(Gate::denies('pinjam_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $kendaraans = Kendaraan::all()->pluck('no_nama', 'id');
+
+        if ($request->kendaraan) {
+            session()->flashInput(['kendaraan_id' => $request->kendaraan]);
+        }
 
         return view('frontend.pinjams.create', compact('kendaraans'));
     }

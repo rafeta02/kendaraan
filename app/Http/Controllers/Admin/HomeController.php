@@ -80,7 +80,7 @@ class HomeController
         }
 
         $settings3 = [
-            'chart_title'           => 'Jumlah Peminjaman',
+            'chart_title'           => 'Grafik Jumlah Peminjaman',
             'chart_type'            => 'bar',
             'report_type'           => 'group_by_date',
             'model'                 => 'App\Models\Pinjam',
@@ -97,7 +97,7 @@ class HomeController
         $chart3 = new LaravelChart($settings3);
 
         $settings4 = [
-            'chart_title'           => 'Latest Peminjaman',
+            'chart_title'           => 'Peminjaman terakhir',
             'chart_type'            => 'latest_entries',
             'report_type'           => 'group_by_date',
             'model'                 => 'App\Models\Pinjam',
@@ -109,14 +109,11 @@ class HomeController
             'column_class'          => 'col-md-12',
             'entries_number'        => '10',
             'fields'                => [
-                'kendaraan'     => 'plat_no',
-                'date_start'    => '',
-                'date_end'      => '',
+                'kendaraan'     => 'no_nama',
+                'waktu_peminjaman' => '',
+                'tanggal_pengajuan' => '',
                 'reason'        => '',
                 'borrowed_by'   => 'name',
-                'driver_status' => '',
-                'key_status'    => '',
-                'is_done'       => '',
             ],
             'translation_key' => 'pinjam',
         ];

@@ -74,7 +74,7 @@ class AdminAccController extends Controller
                         $status = '<span class="badge badge-'.Pinjam::STATUS_BACKGROUND[$row->status].'">'.Pinjam::STATUS_SELECT[$row->status].'</span>';
                         $driver = '';
                         if ($row->driver_status) {
-                            $driver = '<span class="badge badge-warning text-left">Driver : <i class="fa fa-check"></i><br>'.$row->driver->nama.'</span>';
+                            $driver = '<span class="badge badge-warning text-left">Driver : <i class="fa fa-check"></i><br>'.$row->driver->nama.'<br>('.$row->driver->no_wa.')</span>';
                         }
                         $satpam = '';
                         if ($row->key_status) {
@@ -106,7 +106,7 @@ class AdminAccController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -128,7 +128,12 @@ class AdminAccController extends Controller
      */
     public function show($id)
     {
-        //
+        abort_if(Gate::denies('pinjam_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $drivers = Driver::all()->pluck('nama', 'id');
+        $pinjam = Pinjam::with('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by')->find($id);
+
+        return view('admin.adminAcc.show', compact('pinjam', 'drivers'));
     }
 
     /**

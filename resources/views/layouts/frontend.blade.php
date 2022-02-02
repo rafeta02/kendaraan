@@ -53,6 +53,13 @@
                                 </a>
                             </li>
                         @endguest
+                        @can('admin_page')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.home') }}">
+                                    Administrator
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->

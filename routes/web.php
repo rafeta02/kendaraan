@@ -1,6 +1,7 @@
 <?php
 
-Route::view('/', 'welcome');
+Route::view('/', 'landing/index')->name('landing');
+Route::view('/features', 'landing/features')->name('features');
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {

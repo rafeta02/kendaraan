@@ -271,6 +271,21 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title' => 'process_selesai',
             ],
+            [
+                'title' => 'admin_page',
+            ],
+            [
+                'title' => 'admin_page',
+            ],
+            [
+                'title' => 'front_dashboard',
+            ],
+            [
+                'title' => 'front_kendaraan',
+            ],
+            [
+                'title' => 'front_pinjam',
+            ],
         ];
 
         Permission::insert($permissions);

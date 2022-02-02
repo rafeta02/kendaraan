@@ -34,10 +34,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="{{ $chart3->options['column_class'] }}">
-                            <h3>{!! $chart3->options['chart_title'] !!}</h3>
-                            {!! $chart3->renderHtml() !!}
-                        </div>
                         {{-- Widget - latest entries --}}
                         <div class="{{ $settings4['column_class'] }}" style="overflow-x: auto;">
                             <h3>{{ $settings4['chart_title'] }}</h3>
@@ -49,6 +45,10 @@
                                                 {{ trans(sprintf('cruds.%s.fields.%s', $settings4['translation_key'] ?? 'pleaseUpdateWidget', $key)) }}
                                             </th>
                                         @endforeach
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,6 +67,20 @@
                                                     @endif
                                                 </td>
                                             @endforeach
+                                            <td>
+                                                @if($entry->status == 'selesai')
+                                                    <span class="badge badge-dark">Dikembalikan :<br>{{ $entry->date_return_formatted }}</span>
+                                                @elseif ($entry->status == 'ditolak')
+                                                    <span class="badge badge-dark">Ditolak dg alasan :<br>({{ $entry->status_text }})</span>
+                                                @else
+                                                    <span class="badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$entry->status] ?? '' }}">{{ App\Models\Pinjam::STATUS_SELECT[$entry->status] ?? '' }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.process.index') }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            </td>
                                         </tr>
                                         @empty
                                         <tr>
@@ -76,7 +90,10 @@
                                 </tbody>
                             </table>
                         </div>
-
+                        <div class="{{ $chart3->options['column_class'] }}">
+                            <h3>{!! $chart3->options['chart_title'] !!}</h3>
+                            {!! $chart3->renderHtml() !!}
+                        </div>
                     </div>
                 </div>
             </div>

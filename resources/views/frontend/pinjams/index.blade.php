@@ -59,11 +59,19 @@
                                         </td>
                                         <td>
                                             @if($pinjam->status == 'selesai')
-                                                 <span class="badge badge-dark">Dikembalikan {{ $pinjam->date_return_formatted }}</span>
+                                                 <span class="badge badge-dark">Dikembalikan :<br>{{ $pinjam->date_return_formatted }}</span>
                                             @elseif ($pinjam->status == 'ditolak')
                                                 <span class="badge badge-dark">Ditolak dg alasan :<br>({{ $pinjam->status_text }})</span>
                                             @else
                                                 <span class="badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$pinjam->status] ?? '' }}">{{ App\Models\Pinjam::STATUS_SELECT[$pinjam->status] ?? '' }}</span>
+                                                @if ($pinjam->driver_status)
+                                                    <br>
+                                                    <span class="badge badge-warning text-left">Driver : <i class="fa fa-check"></i><br>{{ $pinjam->driver->nama }}<br>({{ $pinjam->driver->no_wa }})</span>
+                                                @endif
+                                                @if ($pinjam->key_status)
+                                                    <br>
+                                                    <span class="badge badge-warning text-left">Kunci sudah dikoordinasikan<br> ke Satpam <i class="fa fa-check"></i></span>
+                                                @endif
                                             @endif
                                         </td>
                                         {{-- <td>
@@ -75,18 +83,14 @@
                                             <input type="checkbox" disabled="disabled" {{ $pinjam->key_status ? 'checked' : '' }}>
                                         </td> --}}
                                         <td>
-                                            @can('pinjam_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.pinjams.show', $pinjam->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
+                                            <a class="btn btn-sm btn-block mb-1 btn-primary" href="{{ route('frontend.pinjams.show', $pinjam->id) }}">
+                                                {{ trans('global.view') }}
+                                            </a>
 
                                             @if($pinjam->status == 'diajukan')
-                                                @can('pinjam_edit')
-                                                    <a class="btn btn-xs btn-info" href="{{ route('frontend.pinjams.edit', $pinjam->id) }}">
-                                                        {{ trans('global.edit') }}
-                                                    </a>
-                                                @endcan
+                                                <a class="btn btn-sm btn-block mb-1 btn-info" href="{{ route('frontend.pinjams.edit', $pinjam->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
                                             @endif
 
                                             @if($pinjam->status == 'diajukan')
@@ -94,11 +98,10 @@
                                                     <form action="{{ route('frontend.pinjams.destroy', $pinjam->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                        <input type="submit" class="btn btn-sm btn-block mb-1 btn-danger" value="{{ trans('global.delete') }}">
                                                     </form>
                                                 @endcan
                                             @endif
-
                                         </td>
 
                                     </tr>

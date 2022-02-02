@@ -417,8 +417,5 @@ $(function () {
     });
 
 });
-
-
-
 </script>
 @endsection

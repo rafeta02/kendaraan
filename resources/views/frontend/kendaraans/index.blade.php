@@ -104,9 +104,9 @@
                                     <th>
                                         Status
                                     </th>
-                                    {{-- <th>
+                                    <th>
                                         &nbsp;
-                                    </th> --}}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -137,28 +137,11 @@
                                                 <span class="badge badge-success">Tersedia</span>
                                             @endif
                                         </td>
-                                        {{-- <td>
-                                            @can('kendaraan_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.kendaraans.show', $kendaraan->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('kendaraan_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.kendaraans.edit', $kendaraan->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('kendaraan_delete')
-                                                <form action="{{ route('frontend.kendaraans.destroy', $kendaraan->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
-
-                                        </td> --}}
+                                        <td>
+                                            <a class="btn btn-sm btn-block btn-primary" href="{{ route('frontend.pinjams.create', ['kendaraan' => $kendaraan->id]) }}">
+                                                Ajukan
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
