@@ -560,7 +560,7 @@ section {
 # Navigation Menu
 --------------------------------------------------------------*/
 /**
-* Desktop Navigation 
+* Desktop Navigation
 */
 .navbar {
   padding: 0;
@@ -649,7 +649,7 @@ section {
 }
 
 /**
-* Mobile Navigation 
+* Mobile Navigation
 */
 .mobile-nav-toggle {
   color: #fff;
@@ -737,9 +737,13 @@ section {
 # Hero Section
 --------------------------------------------------------------*/
 .hero-section {
-  background: linear-gradient(to right, rgba(39, 70, 133, 0.8) 0%, rgba(61, 179, 197, 0.8) 100%), url(../img/hero-bg.jpg);
+  background: linear-gradient(to right, rgba(160, 186, 238, 0.8) 0%, rgba(61, 179, 197, 0.8) 100%), url(../img/risnov-bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   position: relative;
 }
+
 .hero-section .wave {
   width: 100%;
   overflow: hidden;
@@ -757,7 +761,7 @@ section {
 }
 .hero-section, .hero-section > .container > .row {
   height: 100vh;
-  min-height: 880px;
+  min-height: 756px;
 }
 .hero-section.inner-page {
   height: 60vh;

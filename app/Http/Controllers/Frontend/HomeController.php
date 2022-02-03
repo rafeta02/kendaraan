@@ -14,6 +14,8 @@ class HomeController
 {
     public function index()
     {
+        abort_if(Gate::denies('front_dashboard'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $mobil = Kendaraan::where('jenis', 'mobil')->count();
         $motor = Kendaraan::where('jenis', 'motor')->count();
         $available = Kendaraan::where('is_used', 0)->count();

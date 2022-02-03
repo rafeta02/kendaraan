@@ -12,7 +12,7 @@
         @can('process_driver')
         <button class="btn btn-sm btn-block mb-1 btn-primary button-driver" data-id="{{ $row->id }}">Choose Driver</button>
         @else
-        <span class="badge badge-warning text-left">Menunggu Sopir</span>
+        <span class="badge badge-warning text-left">Menunggu Plotting Sopir</span>
         @endcan
     @endif
 

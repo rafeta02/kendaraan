@@ -24,7 +24,7 @@ class AdminAccController extends Controller
      */
     public function index(Request $request)
     {
-        abort_if(Gate::denies('pinjam_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('process_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $drivers = Driver::all()->pluck('nama', 'id');
 
@@ -37,7 +37,19 @@ class AdminAccController extends Controller
                 $query = Pinjam::with(['kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by'])->select(sprintf('%s.*', (new Pinjam())->table));
             }
 
-            $table = Datatables::of($query);
+            if(Gate::allows('is_admin') || Gate::allows('is_adminlppm')) {
+                $table = Datatables::of($query);
+            } else if(Gate::allows('is_adminrt')) {
+                $query->where('status', 'diproses')
+                ->where('driver_status', 0)
+                ->whereHas('kendaraan', function($q) {
+                    $q->where('jenis', 'mobil');
+                });
+                $table = Datatables::of($query);
+            } else {
+                $query->where('created_by_id', auth()->id());
+                $table = Datatables::of($query);
+            }
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
@@ -71,10 +83,10 @@ class AdminAccController extends Controller
                     return '<span class="badge badge-dark">Ditolak dg alasan :<br>('. $row->status_text. ')</span>';
                 } else {
                     if ($row->status == 'diproses') {
-                        $status = '<span class="badge badge-'.Pinjam::STATUS_BACKGROUND[$row->status].'">'.Pinjam::STATUS_SELECT[$row->status].'</span>';
+                        $status = '<span class="badge badge-'.Pinjam::STATUS_BACKGROUND[$row->status].'">'.Pinjam::STATUS_SELECT[$row->status].'</span><br>';
                         $driver = '';
                         if ($row->driver_status) {
-                            $driver = '<span class="badge badge-warning text-left">Driver : <i class="fa fa-check"></i><br>'.$row->driver->nama.'<br>('.$row->driver->no_wa.')</span>';
+                            $driver = '<span class="badge badge-warning text-left">Driver : <i class="fa fa-check"></i><br>'.$row->driver->nama.'<br>('.$row->driver->no_wa.')</span><br>';
                         }
                         $satpam = '';
                         if ($row->key_status) {
@@ -128,7 +140,7 @@ class AdminAccController extends Controller
      */
     public function show($id)
     {
-        abort_if(Gate::denies('pinjam_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('process_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $drivers = Driver::all()->pluck('nama', 'id');
         $pinjam = Pinjam::with('kendaraan', 'borrowed_by', 'processed_by', 'driver', 'satpam', 'created_by')->find($id);

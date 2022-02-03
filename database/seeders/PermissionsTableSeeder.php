@@ -257,6 +257,9 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'process_access',
             ],
             [
+                'title' => 'process_show',
+            ],
+            [
                 'title' => 'process_accept',
             ],
             [
@@ -275,9 +278,6 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'admin_page',
             ],
             [
-                'title' => 'admin_page',
-            ],
-            [
                 'title' => 'front_dashboard',
             ],
             [
@@ -285,6 +285,15 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'title' => 'front_pinjam',
+            ],
+            [
+                'title' => 'is_admin',
+            ],
+            [
+                'title' => 'is_adminlppm',
+            ],
+            [
+                'title' => 'is_adminrt',
             ],
         ];
 

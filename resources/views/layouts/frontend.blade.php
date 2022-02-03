@@ -52,6 +52,16 @@
                                     {{ __('Dashboard') }}
                                 </a>
                             </li>
+                            @can('front_kendaraan')
+                            <li class="nav-item">
+                                <a href="{{ route('frontend.kendaraans.index') }}" class="nav-link">{{ trans('cruds.kendaraan.title') }}</a>
+                            </li>
+                            @endcan
+                            @can('front_pinjam')
+                            <li class="nav-item">
+                                <a href="{{ route('frontend.pinjams.index') }}" class="nav-link">{{ trans('cruds.pinjam.title') }}</a>
+                            </li>
+                            @endcan
                         @endguest
                         @can('admin_page')
                             <li class="nav-item">
@@ -84,13 +94,13 @@
 
                                     <a class="dropdown-item" href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
 
-                                    @can('kendaraan_access')
+                                    @can('front_kendaraan')
                                         <a class="dropdown-item" href="{{ route('frontend.kendaraans.index') }}">
                                             {{ trans('cruds.kendaraan.title') }}
                                         </a>
                                     @endcan
 
-                                    @can('pinjam_access')
+                                    @can('front_pinjam')
                                         <a class="dropdown-item" href="{{ route('frontend.pinjams.index') }}">
                                             {{ trans('cruds.pinjam.title') }}
                                         </a>

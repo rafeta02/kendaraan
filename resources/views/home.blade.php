@@ -34,6 +34,7 @@
                                 </div>
                             </div>
                         </div>
+                        @can('is_adminlppm')
                         {{-- Widget - latest entries --}}
                         <div class="{{ $settings4['column_class'] }}" style="overflow-x: auto;">
                             <h3>{{ $settings4['chart_title'] }}</h3>
@@ -90,6 +91,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        @endcan
                         <div class="{{ $chart3->options['column_class'] }}">
                             <h3>{!! $chart3->options['chart_title'] !!}</h3>
                             {!! $chart3->renderHtml() !!}

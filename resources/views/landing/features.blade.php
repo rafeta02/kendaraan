@@ -3,7 +3,6 @@
 <main id="main">
 
     <!-- ======= Features Section ======= -->
-
     <section class="hero-section inner-page">
         <div class="wave">
 
@@ -25,9 +24,8 @@
                 <div class="col-12">
                     <div class="row justify-content-center">
                         <div class="col-md-7 text-center hero-text">
-                            <h1 data-aos="fade-up" data-aos-delay="">SoftLand Features</h1>
-                            <p class="mb-5" data-aos="fade-up" data-aos-delay="100">Lorem ipsum dolor sit amet,
-                                consectetur adipisicing elit.</p>
+                            <h1 data-aos="fade-up" data-aos-delay="">Fitur Aplikasi</h1>
+                            <p class="mb-5" data-aos="fade-up" data-aos-delay="100">Peminjaman Kendaraan Di lingkungan Riset dan Inovasi Universitas Sebelas Maret.</p>
                         </div>
                     </div>
                 </div>

@@ -36,9 +36,9 @@
         <div class="container d-flex justify-content-between align-items-center">
 
             <div class="logo">
-                <h1><a href="#">SoftLand</a></h1>
+                <h1><a href="#">Portal Peminjaman Kendaraan</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
-                <!-- <a href="index.html"><img src="softland/img/logo.png" alt="" class="img-fluid"></a>-->
+                {{-- <a href="index.html"><img src="{{ asset('softland/img/logo.png') }}" alt="" class="img-fluid"></a> --}}
             </div>
 
             <nav id="navbar" class="navbar">
@@ -89,16 +89,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4 mb-md-0">
-                    <h3>About SoftLand</h3>
+                    <h3>Tentang Portal Peminjaman Kendaraan</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam
                         aperiam
                         dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi.</p>
-                    <p class="social">
+                    {{-- <p class="social">
                         <a href="#"><span class="bi bi-twitter"></span></a>
                         <a href="#"><span class="bi bi-facebook"></span></a>
                         <a href="#"><span class="bi bi-instagram"></span></a>
                         <a href="#"><span class="bi bi-linkedin"></span></a>
-                    </p>
+                    </p> --}}
                 </div>
                 <div class="col-md-7 ms-auto">
                     <div class="row site-section pt-0">
@@ -107,8 +107,6 @@
                             <ul class="list-unstyled">
                                 <li><a href="#">Pricing</a></li>
                                 <li><a href="#">Features</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact</a></li>
                             </ul>
                         </div>
                         <div class="col-md-4 mb-4 mb-md-0">
@@ -121,10 +119,23 @@
                             </ul>
                         </div>
                         <div class="col-md-4 mb-4 mb-md-0">
-                            <h3>Downloads</h3>
+                            <h3>Social Media</h3>
                             <ul class="list-unstyled">
-                                <li><a href="#">Get from the App Store</a></li>
-                                <li><a href="#">Get from the Play Store</a></li>
+                                <li>
+                                    <a href="https://risnov.uns.ac.id/"><span class="bi bi-globe"></span> Web</a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="bi bi-twitter"></span> Twitter</a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="bi bi-facebook"></span> Facebook</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/risnov11maret/"><span class="bi bi-instagram"></span> Instagram</a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="bi bi-linkedin"></span> Linkedin</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -133,7 +144,7 @@
 
             <div class="row justify-content-center text-center">
                 <div class="col-md-7">
-                    <p class="copyright">&copy; Copyright SoftLand. All Rights Reserved</p>
+                    <p class="copyright">&copy; Copyright Risnov. All Rights Reserved</p>
                     <div class="credits">
                         <!--
             All the links in the footer should remain intact.

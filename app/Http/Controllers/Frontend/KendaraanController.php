@@ -18,7 +18,7 @@ class KendaraanController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('kendaraan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('front_kendaraan'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $unit_kerjas = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
