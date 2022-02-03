@@ -1,0 +1,674 @@
+[
+    {
+        "id": "010125",
+        "name": "Badan Pengelola Usaha (BPU)"
+    },
+    {
+        "id": "01010101",
+        "name": "Bagian Akademik dan Kemahasiswaan"
+    },
+    {
+        "id": "01010602",
+        "name": "Bagian Bagian Aset dan Logistik"
+    },
+    {
+        "id": "01010301",
+        "name": "Bagian Biro Riset dan Pengabdian Kepada Masyarakat"
+    },
+    {
+        "id": "01010701",
+        "name": "Bagian Direkrorat Inovasi dan Hilirisasi"
+    },
+    {
+        "id": "01010801",
+        "name": "Bagian Direktorat Kerjasama, Pengembangan dan Internasionalisasi"
+    },
+    {
+        "id": "01010601",
+        "name": "Bagian Keuangan"
+    },
+    {
+        "id": "01010401",
+        "name": "Bagian Perencanaan, Informasi, Kerjasama dan Alumni"
+    },
+    {
+        "id": "01010501",
+        "name": "Bagian Reputasi Akademik dan Kemahasiswaan"
+    },
+    {
+        "id": "01010202",
+        "name": "Bagian SDM"
+    },
+    {
+        "id": "01011001",
+        "name": "Bagian Tata Usaha LPPM"
+    },
+    {
+        "id": "01011101",
+        "name": "Bagian Tata Usaha LPPMP"
+    },
+    {
+        "id": "01010201",
+        "name": "Bagian Umum"
+    },
+    {
+        "id": "01011702",
+        "name": "Bidang Administrasi dan Keuangan UNS Press"
+    },
+    {
+        "id": "01012209",
+        "name": "Bidang Akademik UPT Laboratorium Terpadu"
+    },
+    {
+        "id": "01013604",
+        "name": "Bidang Akuntansi/Keuangan SPI"
+    },
+    {
+        "id": "01011112",
+        "name": "Bidang Bahan Ajar dan Buku Teks LPPMP"
+    },
+    {
+        "id": "01011107",
+        "name": "Bidang Bahasa Indonesia LPPMP"
+    },
+    {
+        "id": "01012203",
+        "name": "Bidang Biologi UPT Laboratorium Terpadu"
+    },
+    {
+        "id": "01011118",
+        "name": "Bidang E-Learning LPPMP"
+    },
+    {
+        "id": "01011010",
+        "name": "Bidang Evaluasi dan Pengembangan Tema pada Unit Pengelola KKN LPPM"
+    },
+    {
+        "id": "01012204",
+        "name": "Bidang Fisika UPT Laboratorium Terpadu"
+    },
+    {
+        "id": "01011011",
+        "name": "Bidang Forum Ilmiah dan Kerjasama Internasional Unit Penjaminan Mutu P2M LPPM"
+    },
+    {
+        "id": "01011005",
+        "name": "Bidang Hak Kekayaan Intelektual Unit Penjaminan Mutu P2M LPPM"
+    },
+    {
+        "id": "01011015",
+        "name": "Bidang Hukum dan Layanan Pendaftaran HKI - Sentra Kekayaan Intelektual"
+    },
+    {
+        "id": "01013602",
+        "name": "Bidang Hukum SPI"
+    },
+    {
+        "id": "01011102",
+        "name": "Bidang Ilmu Kealaman Dasar LPPMP"
+    },
+    {
+        "id": "01011105",
+        "name": "Bidang Ilmu Sosial dan Budaya Dasar LPPMP"
+    },
+    {
+        "id": "01011012",
+        "name": "Bidang Kerjasama dan Publikasi pada Unit Pengelola KKN LPPM"
+    },
+    {
+        "id": "01013605",
+        "name": "Bidang Ketatalaksanaan/Administrasi SPI"
+    },
+    {
+        "id": "01011104",
+        "name": "Bidang Kewirausahaan LPPMP"
+    },
+    {
+        "id": "01012202",
+        "name": "Bidang Kimia UPT Laboratorium Terpadu"
+    },
+    {
+        "id": "01011014",
+        "name": "Bidang KKN Berbasis Kemitraan pada Unit Pengelola KKN LPPM"
+    },
+    {
+        "id": "01011002",
+        "name": "Bidang KKN Berbasis Lokasi pada Unit Pengelola KKN LPPM"
+    },
+    {
+        "id": "01011007",
+        "name": "Bidang Kontrak Kerja dan Kerjasama dengan Institusi Pemerintah maupun Swasta Unit Penjaminan Mutu P2M LPPM"
+    },
+    {
+        "id": "01011109",
+        "name": "Bidang Kurikulum dan Manajemen Pembelajaran LPPMP"
+    },
+    {
+        "id": "01013603",
+        "name": "Bidang Manajemen Aset SPI"
+    },
+    {
+        "id": "01011009",
+        "name": "Bidang Manajemen dan Informasi Unit Pengelola KKN LPPM"
+    },
+    {
+        "id": "01011111",
+        "name": "Bidang Media Pembelajaran LPPMP"
+    },
+    {
+        "id": "01012206",
+        "name": "Bidang Mekatronika UPT Laboratorium Terpadu"
+    },
+    {
+        "id": "01011110",
+        "name": "Bidang Model, Strategi, dan Metode Pembelajaran LPPMP"
+    },
+    {
+        "id": "01011113",
+        "name": "Bidang Monitoring dan Evaluasi Pembelajaran LPPMP"
+    },
+    {
+        "id": "01011117",
+        "name": "Bidang Monitoring, Evaluasi, dan Audit Mutu Internal LPPMP"
+    },
+    {
+        "id": "01011705",
+        "name": "Bidang Pemasaran UNS Press & Bookstore"
+    },
+    {
+        "id": "01011017",
+        "name": "Bidang Pembelajaran Sentra Kekayaan Intelektual"
+    },
+    {
+        "id": "01012207",
+        "name": "Bidang Pemeriksaan Halal UPT Laboratorium Terpadu"
+    },
+    {
+        "id": "01011106",
+        "name": "Bidang Pendidikan Agama LPPMP"
+    },
+    {
+        "id": "01011108",
+        "name": "Bidang Pendidikan Kewarganegaraan LPPMP"
+    },
+    {
+        "id": "01011103",
+        "name": "Bidang Pendidikan Pancasila LPPMP"
+    },
+    {
+        "id": "01011703",
+        "name": "Bidang Penerbitan dan Publikasi UNS Press"
+    },
+    {
+        "id": "01011302",
+        "name": "Bidang Pengembang Sistem Informasi dan Aplikasi Akademik"
+    },
+    {
+        "id": "01011304",
+        "name": "Bidang Pengembang Sistem Informasi dan Aplikasi Kemahasiswaan dan Alumni"
+    },
+    {
+        "id": "01011303",
+        "name": "Bidang Pengembang Sistem Informasi dan Aplikasi Keuangan dan Umum"
+    },
+    {
+        "id": "01011305",
+        "name": "Bidang Pengembang Sistem Informasi dan Aplikasi Perencanaan dan Administrasi Kerjasama"
+    },
+    {
+        "id": "01011903",
+        "name": "Bidang Pengembangan SDM"
+    },
+    {
+        "id": "01012210",
+        "name": "Bidang Pengujian UPT Laboratorium Terpadu"
+    },
+    {
+        "id": "01011902",
+        "name": "Bidang Perencanaan SDM"
+    },
+    {
+        "id": "01011013",
+        "name": "Bidang Persiapan dan Pembekalan pada Unit Pengelola KKN LPPM"
+    },
+    {
+        "id": "01011704",
+        "name": "Bidang Produksi UNS Press & Bookstore"
+    },
+    {
+        "id": "01011003",
+        "name": "Bidang Publikasi Ilmiah dan Bahan Ajar Unit Penjaminan Mutu P2M LPPM"
+    },
+    {
+        "id": "01012211",
+        "name": "Bidang Riset dan Pengembangan UPT Laboratorium Terpadu"
+    },
+    {
+        "id": "01012208",
+        "name": "Bidang Sertifikasi Produk UPT Laboratorium Terpadu"
+    },
+    {
+        "id": "01011008",
+        "name": "Bidang Sistem Informasi P2M Unit Penjaminan Mutu P2M LPPM"
+    },
+    {
+        "id": "01011116",
+        "name": "Bidang Sistem Penjaminan Mutu Eksternal (Internasional) LPPMP"
+    },
+    {
+        "id": "01011115",
+        "name": "Bidang Sistem Penjaminan Mutu Eksternal (Nasional) LPPMP"
+    },
+    {
+        "id": "01011114",
+        "name": "Bidang Sistem Penjaminan Mutu Internal LPPMP"
+    },
+    {
+        "id": "01011006",
+        "name": "Bidang Spin of dan Pemasaran Hasil Riset Unit Penjaminan Mutu P2M LPPM"
+    },
+    {
+        "id": "01013601",
+        "name": "Bidang Sumber Daya Manusia SPI"
+    },
+    {
+        "id": "01011016",
+        "name": "Bidang Teknologi Sentra Kekayaan Intelektual"
+    },
+    {
+        "id": "01011004",
+        "name": "Bidang Teknologi Tepat Guna dan Pengabdian Masyarakat Unit Penjaminan Mutu P2M LPPM"
+    },
+    {
+        "id": "01012205",
+        "name": "Bidang Udara UPT Laboratorium Terpadu"
+    },
+    {
+        "id": "01011119",
+        "name": "Bidang Video Pembelajaran LPPMP"
+    },
+    {
+        "id": "010101",
+        "name": "Biro Akademik dan Kemahasiswaan"
+    },
+    {
+        "id": "010104",
+        "name": "Biro Perencanaan, Informasi, dan Kerjasama"
+    },
+    {
+        "id": "010103",
+        "name": "Biro Riset dan Pengabdian Kepada Masyarakat"
+    },
+    {
+        "id": "010102",
+        "name": "Biro Umum dan SDM"
+    },
+    {
+        "id": "010133",
+        "name": "Dewan Profesor (D.P)"
+    },
+    {
+        "id": "010107",
+        "name": "Direktorat Inovasi dan Hilirisasi"
+    },
+    {
+        "id": "010108",
+        "name": "Direktorat Kerjasama, Pengembangan dan Internasionalisasi"
+    },
+    {
+        "id": "010106",
+        "name": "Direktorat Keuangan dan Optimalisasi Aset"
+    },
+    {
+        "id": "010105",
+        "name": "Direktorat Reputasi Akademik dan Kemahasiswaan"
+    },
+    {
+        "id": "010130",
+        "name": "Kantor Hukum"
+    },
+    {
+        "id": "0101",
+        "name": "Kantor Pusat"
+    },
+    {
+        "id": "01011806",
+        "name": "Koordinator Data dan Informasi"
+    },
+    {
+        "id": "01011804",
+        "name": "Koordinator Kinerja Kepanitiaan"
+    },
+    {
+        "id": "01011802",
+        "name": "Koordinator Kinerja Pendidik"
+    },
+    {
+        "id": "01011805",
+        "name": "Koordinator Kinerja Publikasi Ilmiah dan Kerjasama"
+    },
+    {
+        "id": "01011807",
+        "name": "Koordinator Kinerja Rumah Sakit"
+    },
+    {
+        "id": "01011803",
+        "name": "Koordinator Kinerja Tenaga Kependidikan"
+    },
+    {
+        "id": "01011808",
+        "name": "Koordinator Kinerja Unit Kerja Fakultas, UPT dan Rumah Sakit"
+    },
+    {
+        "id": "01011809",
+        "name": "Koordinator Kinerja Unit Kerja Rektorat, Sekolah Vokasi, dan Pascasarjana"
+    },
+    {
+        "id": "010110",
+        "name": "Lembaga Penelitian Pengabdian Masyarakat (LPPM)"
+    },
+    {
+        "id": "010111",
+        "name": "Lembaga Pengembangan dan Penjaminan Mutu Pendidikan (LPPMP)"
+    },
+    {
+        "id": "010129",
+        "name": "Lembaga Sertifikasi Profesi (LSP)"
+    },
+    {
+        "id": "010135",
+        "name": "Majelis Wali Amanat (MWA)"
+    },
+    {
+        "id": "010127",
+        "name": "PUI Baterai Litium"
+    },
+    {
+        "id": "010128",
+        "name": "PUI Finteck"
+    },
+    {
+        "id": "010126",
+        "name": "PUI Javanologi"
+    },
+    {
+        "id": "010132",
+        "name": "Pusat Bahasa Mandarin (Confusius Institute)"
+    },
+    {
+        "id": "010131",
+        "name": "Pusat Pengembangan Karier (CDC)"
+    },
+    {
+        "id": "010136",
+        "name": "Satuan Pengawas Internal (SPI)"
+    },
+    {
+        "id": "010109",
+        "name": "Sekretaris UNS"
+    },
+    {
+        "id": "010134",
+        "name": "Senat Akademik (S.A)"
+    },
+    {
+        "id": "0101240102",
+        "name": "Sub Bagian Administrasi Kontrak dan Pengendalian Penyediaan"
+    },
+    {
+        "id": "0101010101",
+        "name": "Sub Bagian Akademik"
+    },
+    {
+        "id": "0101060102",
+        "name": "Sub Bagian Akuntansi dan Pelaporan Keuangan"
+    },
+    {
+        "id": "0101030102",
+        "name": "Sub Bagian Data, Sistem Informasi Riset dan Pengabdian Kepada Masyarakat, Inovasi dan Hilirisasi serta Pelaksanaan Evaluasi dan Pelaporan"
+    },
+    {
+        "id": "0101070101",
+        "name": "Sub Bagian Direkrorat Inovasi dan Hilirisasi"
+    },
+    {
+        "id": "0101080101",
+        "name": "Sub Bagian Direktorat Kerjasama, Pengembangan dan Internasionalisasi"
+    },
+    {
+        "id": "0101060202",
+        "name": "Sub Bagian Inventarisasi dan Penatausahaan Aset"
+    },
+    {
+        "id": "0101010102",
+        "name": "Sub Bagian Kemahasiswaan"
+    },
+    {
+        "id": "0101040102",
+        "name": "Sub Bagian Kerjasama dan Alumni"
+    },
+    {
+        "id": "0101020102",
+        "name": "Sub Bagian Kerumahtanggaan"
+    },
+    {
+        "id": "0101190102",
+        "name": "Sub Bagian Organisasi dan Tata Laksana UPT. Pengembangan Sumber Daya Manusia"
+    },
+    {
+        "id": "0101060103",
+        "name": "Sub Bagian Pajak"
+    },
+    {
+        "id": "0101060201",
+        "name": "Sub Bagian Pemeliharaan  Aset"
+    },
+    {
+        "id": "0101060101",
+        "name": "Sub Bagian Penatausahaan Penerimaan, Pengeluaran, dan Pinjaman"
+    },
+    {
+        "id": "0101240101",
+        "name": "Sub Bagian Pengadaan dan Pemilihan Penyedia"
+    },
+    {
+        "id": "0101040101",
+        "name": "Sub Bagian Perencanaan dan Informasi"
+    },
+    {
+        "id": "0101100101",
+        "name": "Sub Bagian Program, Data dan Informasi LPPM"
+    },
+    {
+        "id": "0101110101",
+        "name": "Sub Bagian Program, Data dan Kerjasama LPPMP"
+    },
+    {
+        "id": "0101050101",
+        "name": "Sub Bagian Reputasi Akademik"
+    },
+    {
+        "id": "0101050102",
+        "name": "Sub Bagian Reputasi Kemahasiswaan"
+    },
+    {
+        "id": "0101030101",
+        "name": "Sub Bagian Riset, Pengabdian kepada Masyarakat, Inovasi dan Hilirisasi"
+    },
+    {
+        "id": "0101090101",
+        "name": "Sub Bagian Sekretaris UNS"
+    },
+    {
+        "id": "0101250101",
+        "name": "Sub Bagian Tata Usaha Badan Pengelola Usaha"
+    },
+    {
+        "id": "0101020101",
+        "name": "Sub Bagian Tata Usaha dan Protokol"
+    },
+    {
+        "id": "0101330101",
+        "name": "Sub Bagian Tata Usaha Dewan Profesor (D.P)"
+    },
+    {
+        "id": "0101300101",
+        "name": "Sub Bagian Tata Usaha Kantor Hukum"
+    },
+    {
+        "id": "0101290101",
+        "name": "Sub Bagian Tata Usaha Lembaga Sertifikasi Profesi (LSP)"
+    },
+    {
+        "id": "0101350101",
+        "name": "Sub Bagian Tata Usaha Majelis Wali Amanat (MWA)"
+    },
+    {
+        "id": "0101270101",
+        "name": "Sub Bagian Tata Usaha PUI Baterai Litium"
+    },
+    {
+        "id": "0101280101",
+        "name": "Sub Bagian Tata Usaha PUI Finteck"
+    },
+    {
+        "id": "0101260101",
+        "name": "Sub Bagian Tata Usaha PUI Javanologi"
+    },
+    {
+        "id": "0101320101",
+        "name": "Sub Bagian Tata Usaha Pusat Bahasa Mandarin (Confusius Institute)"
+    },
+    {
+        "id": "0101310101",
+        "name": "Sub Bagian Tata Usaha Pusat Pengembangan Karier (CDC)"
+    },
+    {
+        "id": "0101340101",
+        "name": "Sub Bagian Tata Usaha Senat Akademik (S.A)"
+    },
+    {
+        "id": "0101160101",
+        "name": "Sub Bagian Tata Usaha UPT. Humas dan Media"
+    },
+    {
+        "id": "0101230101",
+        "name": "Sub Bagian Tata Usaha UPT. Kearsipan"
+    },
+    {
+        "id": "0101150101",
+        "name": "Sub Bagian Tata Usaha UPT. Kerjasama dan  Layanan Internasional"
+    },
+    {
+        "id": "0101220101",
+        "name": "Sub Bagian Tata Usaha UPT. Laboratorium Terpadu"
+    },
+    {
+        "id": "0101210101",
+        "name": "Sub Bagian Tata Usaha UPT. Pendidikan dan Pelatihan Kehutanan"
+    },
+    {
+        "id": "0101190101",
+        "name": "Sub Bagian Tata Usaha UPT. Pengembangan Sumber Daya Manusia"
+    },
+    {
+        "id": "0101120101",
+        "name": "Sub Bagian Tata Usaha UPT. Perpustakaan"
+    },
+    {
+        "id": "0101140101",
+        "name": "Sub Bagian Tata Usaha UPT. Pusat Pelayanan dan Pengembangan Bahasa"
+    },
+    {
+        "id": "0101180101",
+        "name": "Sub Bagian Tata Usaha UPT. Remunerasi"
+    },
+    {
+        "id": "0101200101",
+        "name": "Sub Bagian Tata Usaha UPT. Seleksi Penerimaan Mahasiswa Baru (SPMB)"
+    },
+    {
+        "id": "0101130101",
+        "name": "Sub Bagian Tata Usaha UPT. Teknologi Informasi dan Komunikasi (TIK)"
+    },
+    {
+        "id": "0101170101",
+        "name": "Sub Bagian Tata Usaha UPT. UNS Press"
+    },
+    {
+        "id": "0101020201",
+        "name": "Sub Bagian Tenaga Dosen"
+    },
+    {
+        "id": "0101020202",
+        "name": "Sub Bagian Tenaga Kependidikan"
+    },
+    {
+        "id": "0101250102",
+        "name": "Sub Bagian Umum dan Keuangan Badan Pengelola Usaha"
+    },
+    {
+        "id": "0101100102",
+        "name": "Sub Bagian Umum dan Keuangan LPPM"
+    },
+    {
+        "id": "0101110102",
+        "name": "Sub Bagian Umum dan Keuangan LPPMP"
+    },
+    {
+        "id": "010124",
+        "name": "Unit Kerja Pengadaan Barang/Jasa"
+    },
+    {
+        "id": "01012502",
+        "name": "UNS Medical Center"
+    },
+    {
+        "id": "010116",
+        "name": "UPT. Humas dan Media"
+    },
+    {
+        "id": "010123",
+        "name": "UPT. Kearsipan"
+    },
+    {
+        "id": "010115",
+        "name": "UPT. Kerjasama dan  Layanan Internasional"
+    },
+    {
+        "id": "010122",
+        "name": "UPT. Laboratorium Terpadu"
+    },
+    {
+        "id": "010121",
+        "name": "UPT. Pendidikan dan Pelatihan Kehutanan"
+    },
+    {
+        "id": "010119",
+        "name": "UPT. Pengembangan Sumber Daya Manusia"
+    },
+    {
+        "id": "010112",
+        "name": "UPT. Perpustakaan"
+    },
+    {
+        "id": "010114",
+        "name": "UPT. Pusat Pelayanan dan Pengembangan Bahasa"
+    },
+    {
+        "id": "010118",
+        "name": "UPT. Remunerasi"
+    },
+    {
+        "id": "010120",
+        "name": "UPT. Seleksi Penerimaan Mahasiswa Baru (SPMB)"
+    },
+    {
+        "id": "010113",
+        "name": "UPT. Teknologi Informasi dan Komunikasi (TIK)"
+    },
+    {
+        "id": "010117",
+        "name": "UPT. UNS Press"
+    }
+]
