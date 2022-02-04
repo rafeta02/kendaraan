@@ -47,6 +47,9 @@
                                         {{ trans('cruds.logPeminjaman.fields.jenis') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.logPeminjaman.fields.log') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -77,6 +80,9 @@
                                         </td>
                                         <td>
                                             {{ App\Models\LogPeminjaman::JENIS_SELECT[$logPeminjaman->jenis] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $logPeminjaman->log ?? '' }}
                                         </td>
                                         <td>
                                             @can('log_peminjaman_show')

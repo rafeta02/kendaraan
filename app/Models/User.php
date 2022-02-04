@@ -12,23 +12,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
-    use InteractsWithMedia;
     use Auditable;
     use HasFactory;
 
     public $table = 'users';
-
-    protected $appends = [
-        'foto_url',
-    ];
 
     protected $hidden = [
         'remember_token',
@@ -57,6 +49,7 @@ class User extends Authenticatable implements HasMedia
         'no_hp',
         'jwt_token',
         'unit_id',
+        'foto_url',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -64,13 +57,7 @@ class User extends Authenticatable implements HasMedia
 
     public function getIsAdminAttribute()
     {
-        return $this->roles()->whereIn('id', [1, 3, 4, 5])->exists();
-    }
-
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
-        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+        return $this->roles()->whereIn('id', [1, 2, 3, 4])->exists();
     }
 
     public function borrowedByPinjams()
@@ -108,18 +95,6 @@ class User extends Authenticatable implements HasMedia
     public function roles()
     {
         return $this->belongsToMany(Role::class);
-    }
-
-    public function getFotoUrlAttribute()
-    {
-        $file = $this->getMedia('foto_url')->last();
-        if ($file) {
-            $file->url       = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
-        }
-
-        return $file;
     }
 
     public function unit()

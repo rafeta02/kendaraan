@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\StoreLogPeminjamanRequest;
 use App\Http\Requests\UpdateLogPeminjamanRequest;
 use App\Http\Resources\Admin\LogPeminjamanResource;
@@ -14,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LogPeminjamanApiController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('log_peminjaman_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

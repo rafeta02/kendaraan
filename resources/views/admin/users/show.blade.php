@@ -107,22 +107,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.foto_url') }}
-                        </th>
-                        <td>
-                            @if($user->foto_url)
-                                <a href="{{ $user->foto_url->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $user->foto_url->getUrl('thumb') }}">
-                                </a>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.user.fields.unit') }}
                         </th>
                         <td>
                             {{ $user->unit->nama ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.foto_url') }}
+                        </th>
+                        <td>
+                            {{ $user->foto_url }}
                         </td>
                     </tr>
                 </tbody>

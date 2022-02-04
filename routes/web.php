@@ -16,8 +16,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
-    Route::post('users/media', 'UsersController@storeMedia')->name('users.storeMedia');
-    Route::post('users/ckmedia', 'UsersController@storeCKEditorImages')->name('users.storeCKEditorImages');
     Route::post('users/parse-csv-import', 'UsersController@parseCsvImport')->name('users.parseCsvImport');
     Route::post('users/process-csv-import', 'UsersController@processCsvImport')->name('users.processCsvImport');
     Route::resource('users', 'UsersController');
@@ -55,8 +53,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Log Peminjaman
     Route::delete('log-peminjamen/destroy', 'LogPeminjamanController@massDestroy')->name('log-peminjamen.massDestroy');
-    Route::post('log-peminjamen/media', 'LogPeminjamanController@storeMedia')->name('log-peminjamen.storeMedia');
-    Route::post('log-peminjamen/ckmedia', 'LogPeminjamanController@storeCKEditorImages')->name('log-peminjamen.storeCKEditorImages');
     Route::resource('log-peminjamen', 'LogPeminjamanController');
 
     // User Alerts
@@ -103,8 +99,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
-    Route::post('users/media', 'UsersController@storeMedia')->name('users.storeMedia');
-    Route::post('users/ckmedia', 'UsersController@storeCKEditorImages')->name('users.storeCKEditorImages');
     Route::resource('users', 'UsersController');
 
     // Unit
@@ -129,8 +123,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Log Peminjaman
     Route::delete('log-peminjamen/destroy', 'LogPeminjamanController@massDestroy')->name('log-peminjamen.massDestroy');
-    Route::post('log-peminjamen/media', 'LogPeminjamanController@storeMedia')->name('log-peminjamen.storeMedia');
-    Route::post('log-peminjamen/ckmedia', 'LogPeminjamanController@storeCKEditorImages')->name('log-peminjamen.storeCKEditorImages');
     Route::resource('log-peminjamen', 'LogPeminjamanController');
 
     // User Alerts

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\Admin\UserResource;
@@ -14,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UsersApiController extends Controller
 {
-    use MediaUploadingTrait;
-
     public function index()
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -27,9 +24,6 @@ class UsersApiController extends Controller
     {
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
-        if ($request->input('foto_url', false)) {
-            $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('foto_url'))))->toMediaCollection('foto_url');
-        }
 
         return (new UserResource($user))
             ->response()
@@ -47,16 +41,6 @@ class UsersApiController extends Controller
     {
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
-        if ($request->input('foto_url', false)) {
-            if (!$user->foto_url || $request->input('foto_url') !== $user->foto_url->file_name) {
-                if ($user->foto_url) {
-                    $user->foto_url->delete();
-                }
-                $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('foto_url'))))->toMediaCollection('foto_url');
-            }
-        } elseif ($user->foto_url) {
-            $user->foto_url->delete();
-        }
 
         return (new UserResource($user))
             ->response()

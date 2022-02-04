@@ -60,7 +60,7 @@
                             {{ trans('cruds.logPeminjaman.fields.log') }}
                         </th>
                         <td>
-                            {!! $logPeminjaman->log !!}
+                            {{ $logPeminjaman->log }}
                         </td>
                     </tr>
                 </tbody>
