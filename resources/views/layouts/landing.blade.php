@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ trans('panel.site_title') }}</title>
 
     <!-- Google Fonts -->
     <link
@@ -36,7 +36,7 @@
         <div class="container d-flex justify-content-between align-items-center">
 
             <div class="logo">
-                <h1><a href="#">Portal Peminjaman Kendaraan</a></h1>
+                <h1><a href="/">{{ trans('panel.site_title') }}</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 {{-- <a href="index.html"><img src="{{ asset('softland/img/logo.png') }}" alt="" class="img-fluid"></a> --}}
             </div>
@@ -55,8 +55,10 @@
                                     class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li><a href="{{ route('frontend.home') }}">Dashboard</a></li>
-                                <li><a
-                                        href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
+                                @can('admin_page')
+                                    <li><a href="{{ route('admin.home') }}">Administrator</a></li>
+                                @endcan
+                                <li><a href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
                                 </li>
                                 <li><a href="{{ route('frontend.kendaraans.index') }}">
                                     {{ trans('cruds.kendaraan.title') }}

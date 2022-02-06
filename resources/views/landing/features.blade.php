@@ -23,8 +23,8 @@
             <div class="row align-items-center">
                 <div class="col-12">
                     <div class="row justify-content-center">
-                        <div class="col-md-7 text-center hero-text">
-                            <h1 data-aos="fade-up" data-aos-delay="">Fitur Aplikasi</h1>
+                        <div class="col-md-7 text-center hero-text" style="margin-top:-30px !important">
+                            <h1 data-aos="fade-up" data-aos-delay="">Langkah - Langkah Peminjaman</h1>
                             <p class="mb-5" data-aos="fade-up" data-aos-delay="100">Peminjaman Kendaraan Di lingkungan Riset dan Inovasi Universitas Sebelas Maret.</p>
                         </div>
                     </div>

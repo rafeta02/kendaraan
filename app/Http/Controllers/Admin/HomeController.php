@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
+use Gate;
 
 class HomeController
 {
@@ -119,10 +120,24 @@ class HomeController
         ];
 
         $settings4['data'] = [];
+        // if (class_exists($settings4['model'])) {
+        //     $settings4['data'] = $settings4['model']::latest()
+        //         ->take($settings4['entries_number'])
+        //         ->get();
+        // }
+
         if (class_exists($settings4['model'])) {
-            $settings4['data'] = $settings4['model']::latest()
-                ->take($settings4['entries_number'])
-                ->get();
+            $query = $settings4['model']::latest();
+
+            if(!Gate::allows('is_admin') || !Gate::allows('is_adminlppm')) {
+                $query->where('status', 'diproses')
+                ->where('driver_status', 0)
+                ->whereHas('kendaraan', function($q) {
+                    $q->where('jenis', 'mobil');
+                });
+            }
+
+            $settings4['data'] = $query->take($settings4['entries_number'])->get();
         }
 
         if (!array_key_exists('fields', $settings4)) {

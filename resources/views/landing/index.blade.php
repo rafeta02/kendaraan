@@ -8,7 +8,7 @@
             <div class="col-12 hero-text-image">
                 <div class="row">
                     <div class="col-lg-8 text-center text-lg-start">
-                        <h1 data-aos="fade-right">Aplikasi Peminjaman Kendaraan</h1>
+                        <h1 data-aos="fade-right">{{ trans('panel.site_title') }}</h1>
                         <p class="mb-5" data-aos="fade-right" data-aos-delay="100">Di lingkungan Riset dan Inovasi Universitas Sebelas Maret</p>
                         <p data-aos="fade-right" data-aos-delay="200" data-aos-offset="-500"><a href="{{ route('login') }}"
                                 class="btn btn-outline-white">Get started</a></p>
@@ -26,7 +26,7 @@
 
 </section><!-- End Hero -->
 
-<main id="main">
+{{-- <main id="main">
 
     <!-- ======= Home Section ======= -->
     <section class="section">
@@ -273,5 +273,5 @@
         </div>
     </section><!-- End CTA Section -->
 
-</main><!-- End #main -->
+</main><!-- End #main --> --}}
 @endsection

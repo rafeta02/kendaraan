@@ -39,6 +39,11 @@
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
+            <ul class="c-header-nav d-none d-md-flex">
+                <li class="c-header-nav-item"><a class="c-header-nav-link" href="{{ route('frontend.home') }}">Dashboard Users</a></li>
+                <li class="c-header-nav-item"><a class="c-header-nav-link" href="{{ route('frontend.pinjams.create') }}">Tambah Peminjaman</a></li>
+              </ul>
+
             <ul class="c-header-nav ml-auto">
                 @if(count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
