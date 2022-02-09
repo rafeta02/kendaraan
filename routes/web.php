@@ -131,6 +131,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Pinjam
     Route::delete('pinjams/destroy', 'PinjamController@massDestroy')->name('pinjams.massDestroy');
+    Route::post('pinjams/selesai', 'PinjamController@selesai')->name('pinjams.selesai');
     Route::resource('pinjams', 'PinjamController');
 
     Route::get('frontend/profile', 'ProfileController@index')->name('profile.index');

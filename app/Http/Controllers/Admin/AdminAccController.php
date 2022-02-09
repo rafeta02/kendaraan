@@ -71,7 +71,7 @@ class AdminAccController extends Controller
             });
 
             $table->addColumn('borrowed_by_name', function ($row) {
-                return $row->borrowed_by ? $row->borrowed_by->name : '';
+                return $row->borrowed_by ? ('<u>'.$row->borrowed_by->name.'</u><br>No HP :<br>('.$row->borrowed_by->no_hp.')') : '';
             });
             $table->editColumn('reason', function ($row) {
                 return $row->reason ? $row->reason : '';
@@ -103,7 +103,7 @@ class AdminAccController extends Controller
                 return $row->tanggal_pengajuan;
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'kendaraan', 'borrowed_by', 'driver_status', 'key_status', 'status']);
+            $table->rawColumns(['actions', 'placeholder', 'kendaraan', 'borrowed_by', 'driver_status', 'key_status', 'status', 'borrowed_by_name']);
 
             return $table->make(true);
         }
@@ -248,7 +248,7 @@ class AdminAccController extends Controller
     public function sendSatpam(Request $request)
     {
         try {
-            DB::transaction(function() use ($request) {
+            $masudin = DB::transaction(function() use ($request) {
                 $data = Pinjam::find($request->id);
                 $data->key_status = 1;
                 $data->status_text = 'Peminjaman kendaraan "'.$data->kendaraan->no_nama .'" Diproses oleh "'. auth()->user()->name .'" Telah memberikan pemberitahuan ke Satpam';
@@ -261,11 +261,21 @@ class AdminAccController extends Controller
                     'log' => 'Peminjaman kendaraan '. $data->kendaraan->no_nama. ' Diproses oleh "'. auth()->user()->name .'" Telah memberikan pemberitahuan ke Satpam, Untuk tanggal '. $data->WaktuPeminjaman . ' Dengan keperluan "' . $data->reason .'"',
                 ]);
 
+                $pesan = 'Kunci '.$data->kendaraan->no_nama.' Untuk Peminjaman Kendaraan pada tanggal '. $data->WaktuPeminjaman;
+                $pesan_user = 'Kunci '.$data->kendaraan->no_nama.' dengan Driver yang bertugas '.$data->driver->nama. '('.$data->driver->no_wa.') Untuk Peminjaman Kendaraan pada tanggal '. $data->WaktuPeminjaman. ' sudah dikoordinasikan dengan Satpam.';
+                $pesan_coded = str_replace(' ', '%20', $pesan);
+                $masudin = 'https://wa.me/6281227000073?text='.$pesan_coded;
+
                 $data->save();
+
+                return (['masudin' => $masudin, 'pesan' => $pesan, 'pesan_user' => $pesan_user]);
             });
 
+            $this->kirimWablas('6281227000073', $masudin['pesan']);
+            $this->kirimWablas('6281227000073', $masudin['pesan_user']);
+
             $satpams = Satpam::all();
-            return response()->json(['status' => 'success', 'message' => 'Pemberitahuan ke satpam berhasil', 'data' => ['satpam' => $satpams]]);
+            return response()->json(['status' => 'success', 'message' => 'Pemberitahuan ke satpam berhasil', 'data' => ['satpam' => $satpams, 'masudin' => $masudin['masudin']]]);
         } catch (Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
@@ -334,7 +344,7 @@ class AdminAccController extends Controller
     public function reject(Request $request)
     {
         try {
-            DB::transaction(function() use ($request) {
+            $sukses = DB::transaction(function() use ($request) {
                 $data = Pinjam::find($request->pinjam_id);
                 $data->status = 'ditolak';
                 $data->is_done = 1;
@@ -349,11 +359,42 @@ class AdminAccController extends Controller
                 ]);
 
                 $data->save();
+
+                return $log['log'];
             });
+
+            $this->kirimWablas('6281227000073', $sukses);
 
             return response()->json(['status' => 'success', 'message' => 'Peminjaman telah ditolak']);
         } catch (Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
+    }
+
+    function kirimWablas($phone, $msg)
+    {
+        $link  =  "https://console.wablas.com/api/send-message";
+        $data = [
+        'phone' => $phone,
+        'message' => $msg,
+        ];
+
+        $curl = curl_init();
+        $token =  "QW6G6OsQEHhXj3eUv2lXD4xGGpDSWQlnHvlDYc0Mf8TscZJ9vaUNYa7N6pzSYbw8";
+
+        curl_setopt($curl, CURLOPT_HTTPHEADER,
+            array(
+                "Authorization: $token",
+            )
+        );
+        curl_setopt($curl, CURLOPT_URL, $link);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        $result = curl_exec($curl);
+        curl_close($curl);
+        return $result;
     }
 }

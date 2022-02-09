@@ -102,6 +102,16 @@
                                                     </form>
                                                 @endcan
                                             @endif
+
+                                            @if($pinjam->status == 'dipinjam')
+                                                @can('process_selesai')
+                                                <form action="{{ route('frontend.pinjams.selesai') }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="id" value="{{ $pinjam->id }}">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-sm btn-block mb-1 btn-danger" value="Selesai">
+                                                </form>
+                                                @endcan
+                                            @endif
                                         </td>
 
                                     </tr>

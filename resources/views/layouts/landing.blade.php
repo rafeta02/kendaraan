@@ -38,15 +38,16 @@
             <div class="logo">
                 <h1><a href="/">{{ trans('panel.site_title') }}</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
-                {{-- <a href="index.html"><img src="{{ asset('softland/img/logo.png') }}" alt="" class="img-fluid"></a> --}}
+                {{-- <a href="index.html"><img src="{{ asset('softland/img/logo.png') }}"
+                alt="" class="img-fluid"></a> --}}
             </div>
 
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="{{ (request()->is('/')) ? 'active' : '' }}"
                             href="{{ route('landing') }}">Home</a></li>
-                    <li><a class="{{ (request()->is('features')) ? 'active' : '' }}"
-                            href="{{ route('features') }}">Features</a></li>
+                    {{-- <li><a class="{{ (request()->is('features')) ? 'active' : '' }}"
+                            href="{{ route('features') }}">Features</a></li> --}}
                     @guest
                         <li><a href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
@@ -58,14 +59,15 @@
                                 @can('admin_page')
                                     <li><a href="{{ route('admin.home') }}">Administrator</a></li>
                                 @endcan
-                                <li><a href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
+                                <li><a
+                                        href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
                                 </li>
                                 <li><a href="{{ route('frontend.kendaraans.index') }}">
-                                    {{ trans('cruds.kendaraan.title') }}
-                                </a></li>
+                                        {{ trans('cruds.kendaraan.title') }}
+                                    </a></li>
                                 <li><a href="{{ route('frontend.pinjams.index') }}">
-                                    {{ trans('cruds.pinjam.title') }}
-                                </a></li>
+                                        {{ trans('cruds.pinjam.title') }}
+                                    </a></li>
                                 <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}</a>
@@ -91,33 +93,105 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4 mb-md-0">
-                    <h3>Tentang Portal Peminjaman Kendaraan</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ea delectus pariatur, numquam
-                        aperiam
-                        dolore nam optio dolorem facilis itaque voluptatum recusandae deleniti minus animi.</p>
-                    {{-- <p class="social">
-                        <a href="#"><span class="bi bi-twitter"></span></a>
-                        <a href="#"><span class="bi bi-facebook"></span></a>
-                        <a href="#"><span class="bi bi-instagram"></span></a>
-                        <a href="#"><span class="bi bi-linkedin"></span></a>
-                    </p> --}}
+                    <h3>Tentang {{ trans('panel.site_title') }}</h3>
+                    <p>{{ trans('panel.site_title') }} Di lingkungan Riset dan Inovasi Universitas
+                        Sebelas Maret adalah sebuah Portal Informasi yang digunakan untuk melakukan peminjaman kendaraan
+                        di area Riset dan Inovasi Universitas Sebelas Maret</p>
                 </div>
                 <div class="col-md-7 ms-auto">
                     <div class="row site-section pt-0">
                         <div class="col-md-4 mb-4 mb-md-0">
-                            <h3>Navigation</h3>
+                            <h3>Layanan Sistem</h3>
                             <ul class="list-unstyled">
-                                <li><a href="#">Pricing</a></li>
-                                <li><a href="#">Features</a></li>
+                                <li><a target="_blank" rel="noopener" href="https://ocw.uns.ac.id">Open Course Ware
+                                        UNS</a></li>
+                                <li><a target="_blank" href="https://spada.uns.ac.id">SPADA UNS</a></li>
+                                <li><a target="_blank" rel="noopener" href="https://siakad.uns.ac.id">SIAKAD UNS</a>
+                                </li>
+                                <li><a target="_blank" rel="noopener" href="https://simpeg.uns.ac.id">SIMPEG UNS</a>
+                                </li>
+                                <li><a target="_blank" rel="noopener" href="https://sipsmart.uns.ac.id">Prestasi
+                                        Mahasiswa UNS</a></li>
+                                <li><a target="_blank" rel="noopener" href="https://eprints.uns.ac.id/">Institutional
+                                        Repository UNS</a></li>
+                                <li><a target="_blank" rel="noopener" href="https://digilib.uns.ac.id">Digital Library
+                                        UNS</a></li>
+                                <li><a target="_blank" rel="noopener" href="https://jurnal.uns.ac.id">E-Journal UNS</a>
+                                </li>
+                                <li><a target="_blank" rel="noopener" href="https://profil.uns.ac.id/">Email UNS</a>
+                                </li>
+                                <li><a target="_blank" rel="noopener" href="https://jadwal.uns.ac.id/">Generate Jadwal
+                                        UNS</a></li>
+                                <li><a target="_blank" rel="noopener" href="https://iris1103.uns.ac.id/">Riset dan
+                                        Inovasi UNS</a></li>
+                                <li><a target="_blank" rel="noopener" href="https://civitas.uns.ac.id">Blog UNS</a></li>
+                                <li><a target="_blank" rel="noopener"
+                                        href="https://remunerasi.uns.ac.id/web/">Remunerasi
+                                        UNS</a></li>
+                                <li><a target="_blank" rel="noopener" href="https://perencanaan.uns.ac.id/">Perencanaan
+                                        Terpadu UNS</a></li>
+                                <li><a target="_blank" href="https://sikd.uns.ac.id">Kearsipan Dinamis UNS</a></li>
+                                <li><a target="_blank" href="https://sibea.mawa.uns.ac.id/">Pelayanan Beasiswa UNS</a>
+                                </li>
+                                <li><a target="_blank" href="https://sia.uns.ac.id/pajak/">SIA Pendapatan &#038; Pajak
+                                        UNS</a></li>
+                                <li><a target="_blank" href="https://sia.uns.ac.id/sipp/">SIA SIPP UNS</a></li>
+                                <li><a target="_blank" href="https://sister.uns.ac.id/">Sumberdaya Terintegrasi UNS</a>
+                                </li>
+                                <li><a target="_blank" href="https://b2b.uns.ac.id/">Dokumentasi Kerja Sama UNS</a></li>
                             </ul>
                         </div>
                         <div class="col-md-4 mb-4 mb-md-0">
-                            <h3>Services</h3>
+                            <h3>Portal Informasi</h3>
                             <ul class="list-unstyled">
-                                <li><a href="#">Team</a></li>
-                                <li><a href="#">Collaboration</a></li>
-                                <li><a href="#">Todos</a></li>
-                                <li><a href="#">Events</a></li>
+                                <li><a href="https://uns.ac.id">Laman UNS</a></li>
+                                <li>
+                                    <a target="_blank" rel="noopener" href="https://spmb.uns.ac.id">Penerimaan
+                                        Mahasiswa
+                                        Baru UNS</a>
+                                </li>
+                                <li><a href="https://akademik.uns.ac.id">Akademik UNS</a></li>
+                                <li><a href="https://kepeg.auk.uns.ac.id/">Kepegawaian UNS</a></li>
+                                <li><a href="https://mawa.uns.ac.id/">Kemahasiswaan UNS</a></li>
+                                <li>
+                                    <a target="_blank" rel="noopener" href="https://koran.uns.ac.id">UNS on News</a>
+                                </li>
+                                <li>
+                                    <a target="_blank" rel="noopener" href="https://newsroom.uns.ac.id">UNS
+                                        Event</a>
+                                </li>
+                                <li><a target="_blank" rel="noopener" href="https://photostock.uns.ac.id/">Galeri
+                                        UNS</a></li>
+                                <li><a target="_blank" rel="noopener" href="https://rs.uns.ac.id">Rumah Sakit
+                                        UNS</a>
+                                </li>
+                                <li>
+                                    <a href="https://uns.ac.id/id/ukm/">Kiprah Mahasiswa UNS</a>
+                                </li>
+                                <li><a target="_blank" rel="noopener" href="https://karyaku.uns.ac.id">Karya Ilmiah
+                                        Pendidik UNS</a></li>
+                                <li><a href="https://greencampus.uns.ac.id">UNS Green Campus</a></li>
+                                <li>
+                                    <a target="_blank" rel="noopener"
+                                        href="https://uns.ac.id/id/category/uns-research/">Produk &#038;
+                                        Penelitian</a>
+                                </li>
+                                <li>
+                                    <a target="_blank" rel="noopener"
+                                        href="https://uns.ac.id/id/category/uns-berkarya/">Sivitas UNS
+                                        Berkarya</a>
+                                </li>
+                                <li><a href="https://rb.uns.ac.id/">Reformasi Birokrasi UNS</a></li>
+                                <li><a target="_blank" rel="noopener" href="https://video.uns.ac.id">Video UNS</a>
+                                </li>
+                                <li><a href="https://uns.ac.id/id/pidato/">Sambutan Rektor UNS</a></li>
+                                <li><a href="https://alumni.uns.ac.id">Alumni UNS</a></li>
+                                <li><a href="https://jawametrik.uns.ac.id/">Kearifan Lokal UNS</a></li>
+                                <li>
+                                    <a target="_blank" rel="noopener" href="https://cdc.uns.ac.id">Lowongan Kerja
+                                        dan
+                                        Karir</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-md-4 mb-4 mb-md-0">
@@ -133,7 +207,8 @@
                                     <a href="#"><span class="bi bi-facebook"></span> Facebook</a>
                                 </li>
                                 <li>
-                                    <a href="https://www.instagram.com/risnov11maret/"><span class="bi bi-instagram"></span> Instagram</a>
+                                    <a href="https://www.instagram.com/risnov11maret/"><span
+                                            class="bi bi-instagram"></span> Instagram</a>
                                 </li>
                                 <li>
                                     <a href="#"><span class="bi bi-linkedin"></span> Linkedin</a>

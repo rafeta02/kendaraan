@@ -92,7 +92,7 @@
                                         {{ trans('cruds.pinjam.fields.borrowed_by') }}
                                     </th>
                                     <td>
-                                        {{ $pinjam->borrowed_by->name ?? '' }}
+                                        <u>{{ $pinjam->borrowed_by->name }}</u><br>No HP : ({{ $pinjam->borrowed_by->no_hp }})
                                     </td>
                                 </tr>
                                 @if ($pinjam->driver_status)

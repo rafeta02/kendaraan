@@ -67,7 +67,7 @@
                         Kendaraan
                     </th>
                     <th>
-                        Pengaju
+                        Pemohon
                     </th>
                     <th>
                         Tanggal Pengajuan
@@ -337,9 +337,11 @@ $(function () {
                     },
                     success: function (response) {
                         if (response.status == 'success') {
-                            response.data.satpam.forEach(element => {
-                                window.open(element.link_wa, '_blank');
-                            });
+                            // response.data.satpam.forEach(element => {
+                            //     window.open(element.link_wa, '_blank');
+                            // });
+                            console.log(response.data.masudin);
+                            // window.open(response.data.masudin, '_blank');
                             table.ajax.reload();
                             swal("Success", response.message, "success");
                         } else {

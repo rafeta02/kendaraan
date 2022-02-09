@@ -13,6 +13,8 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use DB;
+use Carbon\Carbon;
+use Alert;
 
 class PinjamController extends Controller
 {
@@ -46,7 +48,7 @@ class PinjamController extends Controller
         $request->request->add(['status_text' => 'Diajukan oleh "' . auth()->user()->name .'" peminjaman kendaraan "'.$kendaraan->no_nama .'"']);
         $request->request->add(['borrowed_by_id' => auth()->user()->id]);
 
-        DB::transaction(function() use ($request) {
+        $sukses = DB::transaction(function() use ($request) {
             $pinjam = Pinjam::create($request->all());
 
             $log = LogPeminjaman::create([
@@ -56,7 +58,11 @@ class PinjamController extends Controller
                 'jenis' => 'diajukan',
                 'log' => 'Peminjaman kendaraan '. $pinjam->kendaraan->no_nama. ' Diajukan oleh "'. $pinjam->borrowed_by->name.'" Untuk tanggal '. $pinjam->WaktuPeminjaman . ' Dengan keperluan "' . $pinjam->reason .'"',
             ]);
+
+            return $log['log'];
         });
+        $this->kirimWablas('6289669709492', $sukses);
+
         return redirect()->route('frontend.pinjams.index');
     }
 
@@ -102,4 +108,63 @@ class PinjamController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function selesai(Request $request)
+    {
+        try {
+            DB::transaction(function() use ($request) {
+                $data = Pinjam::find($request->id);
+                $data->status = 'selesai';
+                $data->is_done = 1;
+                $data->date_return = Carbon::now()->format('Y-m-d');
+                $data->status_text = 'Peminjaman kendaraan "'.$data->kendaraan->no_nama .'" Telah dikembalikan dan Proses telah diselesaikan oleh "'. auth()->user()->name.", Peminjaman Selesai.";
+
+                $log = LogPeminjaman::create([
+                    'peminjaman_id' => $data->id,
+                    'kendaraan_id' => $data->kendaraan_id,
+                    'peminjam_id' => $data->borrowed_by_id,
+                    'jenis' => 'selesai',
+                    'log' => 'Peminjaman kendaraan '. $data->kendaraan->no_nama. ' Telah dikembalikan dan Proses telah diselesaikan oleh "'. auth()->user()->name .'" Untuk tanggal '. $data->WaktuPeminjaman . ' Dengan keperluan "' . $data->reason .'", Peminjaman Selesai.',
+                ]);
+
+                $kendaraan = Kendaraan::find($data->kendaraan_id);
+                $kendaraan->is_used = 0;
+                $kendaraan->save();
+
+                $data->save();
+            });
+            Alert::success('Success', 'Kendaraan telah telah dikembalikan dan peminjaman selesai');
+            return redirect()->back();
+        } catch (Exception $e) {
+            Alert::error('Error', 'Something wrong !');
+            return redirect()->back();
+        }
+    }
+
+    function kirimWablas($phone, $msg)
+        {
+            $link  =  "https://console.wablas.com/api/send-message";
+            $data = [
+            'phone' => $phone,
+            'message' => $msg,
+            ];
+
+            $curl = curl_init();
+            $token =  "QW6G6OsQEHhXj3eUv2lXD4xGGpDSWQlnHvlDYc0Mf8TscZJ9vaUNYa7N6pzSYbw8";
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER,
+                array(
+                    "Authorization: $token",
+                )
+            );
+            curl_setopt($curl, CURLOPT_URL, $link);
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            $result = curl_exec($curl);
+            curl_close($curl);
+            return $result;
+        }
 }

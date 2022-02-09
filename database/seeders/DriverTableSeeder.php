@@ -46,21 +46,21 @@ class DriverTableSeeder extends Seeder
                 'nama'  => 'Margiyanto',
                 'no_wa' => '6285878166411',
             ],
-            [
-                'nip'   => '12345678910',
-                'nama'  => 'Sumpono',
-                'no_wa' => '6281393277555',
-            ],
+            // [
+            //     'nip'   => '12345678910',
+            //     'nama'  => 'Sumpono',
+            //     'no_wa' => '6281393277555',
+            // ],
             [
                 'nip'   => '12345678910',
                 'nama'  => 'Budiyantodrv',
                 'no_wa' => '6281329127140',
             ],
-            [
-                'nip'   => '12345678910',
-                'nama'  => 'Budi BH',
-                'no_wa' => '6285747859686',
-            ],
+            // [
+            //     'nip'   => '12345678910',
+            //     'nama'  => 'Budi BH',
+            //     'no_wa' => '6285747859686',
+            // ],
             [
                 'nip'   => '12345678910',
                 'nama'  => 'Anda',
@@ -71,21 +71,21 @@ class DriverTableSeeder extends Seeder
                 'nama'  => 'Rofiq',
                 'no_wa' => '6285229611459',
             ],
-            [
-                'nip'   => '12345678910',
-                'nama'  => 'Saiful Pramono',
-                'no_wa' => '6282243802834',
-            ],
+            // [
+            //     'nip'   => '12345678910',
+            //     'nama'  => 'Saiful Pramono',
+            //     'no_wa' => '6282243802834',
+            // ],
             [
                 'nip'   => '12345678910',
                 'nama'  => 'Supriyanto',
                 'no_wa' => '6285201196745',
             ],
-            [
-                'nip'   => '12345678910',
-                'nama'  => 'S.Brita-Driver',
-                'no_wa' => '6285747491333',
-            ],
+            // [
+            //     'nip'   => '12345678910',
+            //     'nama'  => 'S.Brita-Driver',
+            //     'no_wa' => '6285747491333',
+            // ],
             [
                 'nip'   => '12345678910',
                 'nama'  => 'Ardhika Haby',
@@ -96,11 +96,11 @@ class DriverTableSeeder extends Seeder
                 'nama'  => 'Agus Driver',
                 'no_wa' => '6281380462169',
             ],
-            [
-                'nip'   => '12345678910',
-                'nama'  => 'Wahyu Driver',
-                'no_wa' => '6285647527556',
-            ],
+            // [
+            //     'nip'   => '12345678910',
+            //     'nama'  => 'Wahyu Driver',
+            //     'no_wa' => '6285647527556',
+            // ],
         ];
 
         Driver::insert($drivers);

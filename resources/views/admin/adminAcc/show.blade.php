@@ -119,7 +119,7 @@
                             {{ trans('cruds.pinjam.fields.borrowed_by') }}
                         </th>
                         <td>
-                            {{ $pinjam->borrowed_by->name ?? '' }}
+                            <u>{{ $pinjam->borrowed_by->name }}</u><br>No HP : ({{ $pinjam->borrowed_by->no_hp }})
                         </td>
                     </tr>
                     @if ($pinjam->driver_status)
@@ -365,9 +365,11 @@ $(function () {
                     },
                     success: function (response) {
                         if (response.status == 'success') {
-                            response.data.satpam.forEach(element => {
-                                window.open(element.link_wa, '_blank');
-                            });
+                            // response.data.satpam.forEach(element => {
+                            //     window.open(element.link_wa, '_blank');
+                            // });
+                            console.log(response.data.masudin);
+                            // window.open(response.data.masudin, '_blank');
                             location.reload();
                             swal("Success", response.message, "success");
                         } else {
