@@ -118,10 +118,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.user.fields.foto_url') }}
+                                        {{ trans('cruds.user.fields.foto') }}
                                     </th>
                                     <td>
-                                        {{ $user->foto_url }}
+                                        {{ $user->foto }}
                                     </td>
                                 </tr>
                             </tbody>

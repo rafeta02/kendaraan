@@ -1,7 +1,6 @@
 <?php
 
-Route::view('/', 'landing/index')->name('landing');
-Route::view('/features', 'landing/features')->name('features');
+Route::view('/', 'welcome');
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
@@ -22,6 +21,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Audit Logs
     Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+
+    // User Alerts
+    Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
+    Route::get('user-alerts/read', 'UserAlertsController@read');
+    Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
 
     // Unit
     Route::delete('units/destroy', 'UnitController@massDestroy')->name('units.massDestroy');
@@ -53,31 +57,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('kendaraans/process-csv-import', 'KendaraanController@processCsvImport')->name('kendaraans.processCsvImport');
     Route::resource('kendaraans', 'KendaraanController');
 
-    // Log Peminjaman
-    Route::delete('log-peminjamen/destroy', 'LogPeminjamanController@massDestroy')->name('log-peminjamen.massDestroy');
-    Route::resource('log-peminjamen', 'LogPeminjamanController');
-
-    // User Alerts
-    Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
-    Route::get('user-alerts/read', 'UserAlertsController@read');
-    Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
-
     // Pinjam
     Route::delete('pinjams/destroy', 'PinjamController@massDestroy')->name('pinjams.massDestroy');
     Route::post('pinjams/media', 'PinjamController@storeMedia')->name('pinjams.storeMedia');
     Route::post('pinjams/ckmedia', 'PinjamController@storeCKEditorImages')->name('pinjams.storeCKEditorImages');
     Route::resource('pinjams', 'PinjamController');
 
-    // Proceed
-    Route::delete('process/destroy', 'AdminAccController@massDestroy')->name('process.massDestroy');
-    Route::post('process/accept', 'AdminAccController@acceptPengajuan')->name('process.accept');
-    Route::get('process/choose-driver', 'AdminAccController@chooseDriver')->name('process.chooseDriver');
-    Route::post('process/save-driver', 'AdminAccController@saveDriver')->name('process.saveDriver');
-    Route::post('process/send-satpam', 'AdminAccController@sendSatpam')->name('process.sendSatpam');
-    Route::post('process/borrowed', 'AdminAccController@telahDipinjam')->name('process.borrowed');
-    Route::post('process/done', 'AdminAccController@selesai')->name('process.done');
-    Route::post('process/reject', 'AdminAccController@reject')->name('process.reject');
-    Route::resource('process', 'AdminAccController');
+    // Log Peminjaman
+    Route::delete('log-peminjamen/destroy', 'LogPeminjamanController@massDestroy')->name('log-peminjamen.massDestroy');
+    Route::resource('log-peminjamen', 'LogPeminjamanController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
 });
@@ -105,6 +93,10 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     Route::resource('users', 'UsersController');
 
+    // User Alerts
+    Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
+    Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
+
     // Unit
     Route::delete('units/destroy', 'UnitController@massDestroy')->name('units.massDestroy');
     Route::resource('units', 'UnitController');
@@ -127,20 +119,15 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('kendaraans/ckmedia', 'KendaraanController@storeCKEditorImages')->name('kendaraans.storeCKEditorImages');
     Route::resource('kendaraans', 'KendaraanController');
 
-    // Log Peminjaman
-    Route::delete('log-peminjamen/destroy', 'LogPeminjamanController@massDestroy')->name('log-peminjamen.massDestroy');
-    Route::resource('log-peminjamen', 'LogPeminjamanController');
-
-    // User Alerts
-    Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
-    Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
-
     // Pinjam
     Route::delete('pinjams/destroy', 'PinjamController@massDestroy')->name('pinjams.massDestroy');
     Route::post('pinjams/media', 'PinjamController@storeMedia')->name('pinjams.storeMedia');
     Route::post('pinjams/ckmedia', 'PinjamController@storeCKEditorImages')->name('pinjams.storeCKEditorImages');
-    Route::post('pinjams/selesai', 'PinjamController@selesai')->name('pinjams.selesai');
     Route::resource('pinjams', 'PinjamController');
+
+    // Log Peminjaman
+    Route::delete('log-peminjamen/destroy', 'LogPeminjamanController@massDestroy')->name('log-peminjamen.massDestroy');
+    Route::resource('log-peminjamen', 'LogPeminjamanController');
 
     Route::get('frontend/profile', 'ProfileController@index')->name('profile.index');
     Route::post('frontend/profile', 'ProfileController@update')->name('profile.update');

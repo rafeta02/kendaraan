@@ -23,19 +23,46 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.kendaraan.fields.plat_no') }}
+                                        {{ trans('cruds.pinjam.fields.id') }}
                                     </th>
                                     <th>
-                                        Kendaraan
+                                        {{ trans('cruds.pinjam.fields.kendaraan') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.pinjam.fields.waktu_peminjaman') }}
+                                        {{ trans('cruds.kendaraan.fields.merk') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.kendaraan.fields.jenis') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.date_start') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.date_end') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.date_return') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.pinjam.fields.reason') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.pinjam.fields.status') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.borrowed_by') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.email') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.driver_status') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.key_status') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.surat_permohonan') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -46,72 +73,76 @@
                                 @foreach($pinjams as $key => $pinjam)
                                     <tr data-entry-id="{{ $pinjam->id }}">
                                         <td>
-                                            {{ $pinjam->kendaraan->no_pol ?? '' }}
+                                            {{ $pinjam->id ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $pinjam->kendaraan->no_nama ?? '' }}
+                                            {{ $pinjam->kendaraan->plat_no ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $pinjam->waktu_peminjaman }}
+                                            {{ $pinjam->kendaraan->merk ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($pinjam->kendaraan)
+                                                {{ $pinjam->kendaraan::JENIS_SELECT[$pinjam->kendaraan->jenis] ?? '' }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $pinjam->date_start ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $pinjam->date_end ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $pinjam->date_return ?? '' }}
                                         </td>
                                         <td>
                                             {{ $pinjam->reason ?? '' }}
                                         </td>
                                         <td>
-                                            @if($pinjam->status == 'selesai')
-                                                 <span class="badge badge-dark">Dikembalikan :<br>{{ $pinjam->date_return_formatted }}</span>
-                                            @elseif ($pinjam->status == 'ditolak')
-                                                <span class="badge badge-dark">Ditolak dg alasan :<br>({{ $pinjam->status_text }})</span>
-                                            @else
-                                                <span class="badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$pinjam->status] ?? '' }}">{{ App\Models\Pinjam::STATUS_SELECT[$pinjam->status] ?? '' }}</span>
-                                                @if ($pinjam->driver_status)
-                                                    <br>
-                                                    <span class="badge badge-warning text-left">Driver : <i class="fa fa-check"></i><br>{{ $pinjam->driver->nama }}<br>({{ $pinjam->driver->no_wa }})</span>
-                                                @endif
-                                                @if ($pinjam->key_status)
-                                                    <br>
-                                                    <span class="badge badge-warning text-left">Kunci sudah dikoordinasikan<br> ke Satpam <i class="fa fa-check"></i></span>
-                                                @endif
-                                            @endif
+                                            {{ App\Models\Pinjam::STATUS_SELECT[$pinjam->status] ?? '' }}
                                         </td>
-                                        {{-- <td>
+                                        <td>
+                                            {{ $pinjam->borrowed_by->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $pinjam->borrowed_by->email ?? '' }}
+                                        </td>
+                                        <td>
                                             <span style="display:none">{{ $pinjam->driver_status ?? '' }}</span>
                                             <input type="checkbox" disabled="disabled" {{ $pinjam->driver_status ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             <span style="display:none">{{ $pinjam->key_status ?? '' }}</span>
                                             <input type="checkbox" disabled="disabled" {{ $pinjam->key_status ? 'checked' : '' }}>
-                                        </td> --}}
+                                        </td>
                                         <td>
-                                            <a class="btn btn-sm btn-block mb-1 btn-primary" href="{{ route('frontend.pinjams.show', $pinjam->id) }}">
-                                                {{ trans('global.view') }}
-                                            </a>
-
-                                            @if($pinjam->status == 'diajukan')
-                                                <a class="btn btn-sm btn-block mb-1 btn-info" href="{{ route('frontend.pinjams.edit', $pinjam->id) }}">
-                                                    {{ trans('global.edit') }}
+                                            @if($pinjam->surat_permohonan)
+                                                <a href="{{ $pinjam->surat_permohonan->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
                                                 </a>
                                             @endif
+                                        </td>
+                                        <td>
+                                            @can('pinjam_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.pinjams.show', $pinjam->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
 
-                                            @if($pinjam->status == 'diajukan')
-                                                @can('pinjam_delete')
-                                                    <form action="{{ route('frontend.pinjams.destroy', $pinjam->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <input type="submit" class="btn btn-sm btn-block mb-1 btn-danger" value="{{ trans('global.delete') }}">
-                                                    </form>
-                                                @endcan
-                                            @endif
+                                            @can('pinjam_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.pinjams.edit', $pinjam->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
 
-                                            @if($pinjam->status == 'dipinjam')
-                                                @can('process_selesai')
-                                                <form action="{{ route('frontend.pinjams.selesai') }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="id" value="{{ $pinjam->id }}">
+                                            @can('pinjam_delete')
+                                                <form action="{{ route('frontend.pinjams.destroy', $pinjam->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-sm btn-block mb-1 btn-danger" value="Selesai">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
                                                 </form>
-                                                @endcan
-                                            @endif
+                                            @endcan
+
                                         </td>
 
                                     </tr>
@@ -129,7 +160,7 @@
 @section('scripts')
 @parent
 <script>
-$(function () {
+    $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('pinjam_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
@@ -171,9 +202,8 @@ $(function () {
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-
+  
 })
 
 </script>
 @endsection
-

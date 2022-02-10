@@ -15,34 +15,55 @@
                             <a class="btn btn-default" href="{{ route('frontend.pinjams.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
-                            <a class="btn btn-info" href="{{ route('frontend.pinjams.edit', $pinjam->id) }}">
-                                {{ trans('global.edit') }}
-                            </a>
                         </div>
                         <table class="table table-bordered table-striped">
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.kendaraan.fields.plat_no') }}
+                                        {{ trans('cruds.pinjam.fields.id') }}
                                     </th>
                                     <td>
-                                        {{ $pinjam->kendaraan->no_pol ?? '' }}
+                                        {{ $pinjam->id }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        Kendaraan
+                                        {{ trans('cruds.pinjam.fields.kendaraan') }}
                                     </th>
                                     <td>
-                                        {{ $pinjam->kendaraan->no_nama ?? '' }}
+                                        {{ $pinjam->kendaraan->plat_no ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.pinjam.fields.waktu_peminjaman') }}
+                                        {{ trans('cruds.pinjam.fields.date_start') }}
                                     </th>
                                     <td>
-                                        {{ $pinjam->waktu_peminjaman }}
+                                        {{ $pinjam->date_start }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.date_end') }}
+                                    </th>
+                                    <td>
+                                        {{ $pinjam->date_end }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.date_borrow') }}
+                                    </th>
+                                    <td>
+                                        {{ $pinjam->date_borrow }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.date_return') }}
+                                    </th>
+                                    <td>
+                                        {{ $pinjam->date_return }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -58,21 +79,7 @@
                                         {{ trans('cruds.pinjam.fields.status') }}
                                     </th>
                                     <td>
-                                        @if($pinjam->status == 'selesai')
-                                                 <span class="badge badge-dark">Dikembalikan :<br>{{ $pinjam->date_return_formatted }}</span>
-                                        @elseif ($pinjam->status == 'ditolak')
-                                            <span class="badge badge-dark">Ditolak dg alasan :<br>({{ $pinjam->status_text }})</span>
-                                        @else
-                                            <span class="badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$pinjam->status] ?? '' }}">{{ App\Models\Pinjam::STATUS_SELECT[$pinjam->status] ?? '' }}</span>
-                                            @if ($pinjam->driver_status)
-                                                <br>
-                                                <span class="badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$pinjam->status] ?? '' }} text-left">Driver : <i class="fa fa-check"></i><br>{{ $pinjam->driver->nama }}<br>({{ $pinjam->driver->no_wa }})</span>
-                                            @endif
-                                            @if ($pinjam->key_status)
-                                                <br>
-                                                <span class="badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$pinjam->status] ?? '' }} text-left">Kunci sudah dikoordinasikan<br> ke Satpam <i class="fa fa-check"></i></span>
-                                            @endif
-                                        @endif
+                                        {{ App\Models\Pinjam::STATUS_SELECT[$pinjam->status] ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -80,11 +87,7 @@
                                         {{ trans('cruds.pinjam.fields.status_text') }}
                                     </th>
                                     <td>
-                                        @if ($pinjam->status == 'ditolak')
-                                            Peminjaman "ditolak" dengan alasan "{{ $pinjam->status_text }}"
-                                        @else
-                                            {{ $pinjam->status_text }}
-                                        @endif
+                                        {{ $pinjam->status_text }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -92,30 +95,61 @@
                                         {{ trans('cruds.pinjam.fields.borrowed_by') }}
                                     </th>
                                     <td>
-                                        <u>{{ $pinjam->borrowed_by->name }}</u><br>No HP : ({{ $pinjam->borrowed_by->no_hp }})
+                                        {{ $pinjam->borrowed_by->name ?? '' }}
                                     </td>
                                 </tr>
-                                @if ($pinjam->driver_status)
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.driver_status') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $pinjam->driver_status ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th>
                                         {{ trans('cruds.pinjam.fields.driver') }}
                                     </th>
                                     <td>
-                                        {{ $pinjam->driver->nama ?? '' }}<br>
-                                        ({{ $pinjam->driver->no_wa ?? '' }})
+                                        {{ $pinjam->driver->nama ?? '' }}
                                     </td>
                                 </tr>
-                                @endif
-                                @if ($pinjam->key_status)
                                 <tr>
                                     <th>
                                         {{ trans('cruds.pinjam.fields.key_status') }}
                                     </th>
                                     <td>
-                                        Kunci sudah dikoordinasikan dengan Satpam.
+                                        <input type="checkbox" disabled="disabled" {{ $pinjam->key_status ? 'checked' : '' }}>
                                     </td>
                                 </tr>
-                                @endif
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.satpam') }}
+                                    </th>
+                                    <td>
+                                        {{ $pinjam->satpam->nama ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.is_done') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $pinjam->is_done ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.pinjam.fields.surat_permohonan') }}
+                                    </th>
+                                    <td>
+                                        @if($pinjam->surat_permohonan)
+                                            <a href="{{ $pinjam->surat_permohonan->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

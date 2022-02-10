@@ -39,11 +39,6 @@
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
-            <ul class="c-header-nav d-none d-md-flex">
-                <li class="c-header-nav-item"><a class="c-header-nav-link" href="{{ route('frontend.home') }}">Dashboard Users</a></li>
-                <li class="c-header-nav-item"><a class="c-header-nav-link" href="{{ route('frontend.pinjams.create') }}">Tambah Peminjaman</a></li>
-              </ul>
-
             <ul class="c-header-nav ml-auto">
                 @if(count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
@@ -124,7 +119,6 @@
             </form>
         </div>
     </div>
-    @include('sweetalert::alert')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>

@@ -11,11 +11,12 @@ use App\Http\Requests\UpdateKendaraanRequest;
 use App\Models\Driver;
 use App\Models\Kendaraan;
 use App\Models\SubUnit;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Spatie\MediaLibrary\Models\Media;
 
 class KendaraanController extends Controller
 {
@@ -27,7 +28,7 @@ class KendaraanController extends Controller
         abort_if(Gate::denies('kendaraan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Kendaraan::with(['drivers', 'unit_kerja'])->select(sprintf('%s.*', (new Kendaraan())->table));
+            $query = Kendaraan::with(['drivers', 'unit_kerja', 'owned_by'])->select(sprintf('%s.*', (new Kendaraan())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -70,7 +71,6 @@ class KendaraanController extends Controller
             $table->editColumn('unit_kerja.slug', function ($row) {
                 return $row->unit_kerja ? (is_string($row->unit_kerja) ? $row->unit_kerja : $row->unit_kerja->slug) : '';
             });
-
             $table->editColumn('foto', function ($row) {
                 if (!$row->foto) {
                     return '';
@@ -99,7 +99,9 @@ class KendaraanController extends Controller
 
         $unit_kerjas = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.kendaraans.create', compact('drivers', 'unit_kerjas'));
+        $owned_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.kendaraans.create', compact('drivers', 'owned_bies', 'unit_kerjas'));
     }
 
     public function store(StoreKendaraanRequest $request)
@@ -125,9 +127,11 @@ class KendaraanController extends Controller
 
         $unit_kerjas = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $kendaraan->load('drivers', 'unit_kerja');
+        $owned_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.kendaraans.edit', compact('drivers', 'kendaraan', 'unit_kerjas'));
+        $kendaraan->load('drivers', 'unit_kerja', 'owned_by');
+
+        return view('admin.kendaraans.edit', compact('drivers', 'kendaraan', 'owned_bies', 'unit_kerjas'));
     }
 
     public function update(UpdateKendaraanRequest $request, Kendaraan $kendaraan)
@@ -155,7 +159,7 @@ class KendaraanController extends Controller
     {
         abort_if(Gate::denies('kendaraan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $kendaraan->load('drivers', 'unit_kerja', 'kendaraanPinjams');
+        $kendaraan->load('drivers', 'unit_kerja', 'owned_by', 'kendaraanPinjams');
 
         return view('admin.kendaraans.show', compact('kendaraan'));
     }

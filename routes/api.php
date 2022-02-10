@@ -17,10 +17,10 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('kendaraans/media', 'KendaraanApiController@storeMedia')->name('kendaraans.storeMedia');
     Route::apiResource('kendaraans', 'KendaraanApiController');
 
-    // Log Peminjaman
-    Route::apiResource('log-peminjamen', 'LogPeminjamanApiController');
-
     // Pinjam
     Route::post('pinjams/media', 'PinjamApiController@storeMedia')->name('pinjams.storeMedia');
     Route::apiResource('pinjams', 'PinjamApiController');
+
+    // Log Peminjaman
+    Route::apiResource('log-peminjamen', 'LogPeminjamanApiController');
 });

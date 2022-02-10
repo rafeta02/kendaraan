@@ -119,6 +119,20 @@
                 <span class="help-block">{{ trans('cruds.kendaraan.fields.foto_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="owned_by_id">{{ trans('cruds.kendaraan.fields.owned_by') }}</label>
+                <select class="form-control select2 {{ $errors->has('owned_by') ? 'is-invalid' : '' }}" name="owned_by_id" id="owned_by_id">
+                    @foreach($owned_bies as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('owned_by_id') ? old('owned_by_id') : $kendaraan->owned_by->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('owned_by'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('owned_by') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.kendaraan.fields.owned_by_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -126,6 +140,9 @@
         </form>
     </div>
 </div>
+
+
+
 @endsection
 
 @section('scripts')

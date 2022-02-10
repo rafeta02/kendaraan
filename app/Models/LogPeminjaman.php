@@ -3,22 +3,20 @@
 namespace App\Models;
 
 use \DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LogPeminjaman extends Model
 {
     use SoftDeletes;
-    use HasFactory;
 
     public const JENIS_SELECT = [
-        'diajukan' => 'Diajukan',
-        'diproses' => 'Diproses',
-        // 'diterima' => 'Diterima',
-        'dipinjam' => 'Dipinjam',
-        'selesai'  => 'Selesai',
-        'ditolak'  => 'Ditolak',
+        'diajukan'     => 'Diajukan',
+        'diproses'     => 'Diproses',
+        'disetujui'    => 'Disetujui',
+        'dipinjam'     => 'Dipinjam',
+        'ditolak'      => 'Ditolak',
+        'dikembalikan' => 'Dikembalikan',
     ];
 
     public $table = 'log_peminjamen';

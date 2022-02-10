@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ trans('panel.site_title') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -36,7 +36,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ trans('panel.site_title') }}
+                    {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -52,24 +52,7 @@
                                     {{ __('Dashboard') }}
                                 </a>
                             </li>
-                            @can('front_kendaraan')
-                            <li class="nav-item">
-                                <a href="{{ route('frontend.kendaraans.index') }}" class="nav-link">{{ trans('cruds.kendaraan.title') }}</a>
-                            </li>
-                            @endcan
-                            @can('front_pinjam')
-                            <li class="nav-item">
-                                <a href="{{ route('frontend.pinjams.index') }}" class="nav-link">{{ trans('cruds.pinjam.title') }}</a>
-                            </li>
-                            @endcan
                         @endguest
-                        @can('admin_page')
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.home') }}">
-                                    Administrator
-                                </a>
-                            </li>
-                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -94,15 +77,74 @@
 
                                     <a class="dropdown-item" href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
 
-                                    @can('front_kendaraan')
-                                        <a class="dropdown-item" href="{{ route('frontend.kendaraans.index') }}">
+                                    @can('user_management_access')
+                                        <a class="dropdown-item disabled" href="#">
+                                            {{ trans('cruds.userManagement.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('permission_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.permissions.index') }}">
+                                            {{ trans('cruds.permission.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('role_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.roles.index') }}">
+                                            {{ trans('cruds.role.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('user_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.users.index') }}">
+                                            {{ trans('cruds.user.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('master_access')
+                                        <a class="dropdown-item disabled" href="#">
+                                            {{ trans('cruds.master.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('kendaraan_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.kendaraans.index') }}">
                                             {{ trans('cruds.kendaraan.title') }}
                                         </a>
                                     @endcan
-
-                                    @can('front_pinjam')
+                                    @can('driver_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.drivers.index') }}">
+                                            {{ trans('cruds.driver.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('satpam_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.satpams.index') }}">
+                                            {{ trans('cruds.satpam.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('sub_unit_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.sub-units.index') }}">
+                                            {{ trans('cruds.subUnit.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('unit_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.units.index') }}">
+                                            {{ trans('cruds.unit.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('pinjam_access')
                                         <a class="dropdown-item" href="{{ route('frontend.pinjams.index') }}">
                                             {{ trans('cruds.pinjam.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('log_access')
+                                        <a class="dropdown-item disabled" href="#">
+                                            {{ trans('cruds.log.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('log_peminjaman_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.log-peminjamen.index') }}">
+                                            {{ trans('cruds.logPeminjaman.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('user_alert_access')
+                                        <a class="dropdown-item" href="{{ route('frontend.user-alerts.index') }}">
+                                            {{ trans('cruds.userAlert.title') }}
                                         </a>
                                     @endcan
 
@@ -150,7 +192,6 @@
             @yield('content')
         </main>
     </div>
-    @include('sweetalert::alert')
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>

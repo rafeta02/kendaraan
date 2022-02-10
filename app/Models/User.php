@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +17,6 @@ class User extends Authenticatable
     use SoftDeletes;
     use Notifiable;
     use Auditable;
-    use HasFactory;
 
     public $table = 'users';
 
@@ -49,7 +47,7 @@ class User extends Authenticatable
         'no_hp',
         'jwt_token',
         'unit_id',
-        'foto_url',
+        'foto',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -57,7 +55,7 @@ class User extends Authenticatable
 
     public function getIsAdminAttribute()
     {
-        return $this->roles()->whereIn('id', [1, 2, 3, 4])->exists();
+        return $this->roles()->where('id', 1)->exists();
     }
 
     public function borrowedByPinjams()

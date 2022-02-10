@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateKendaraanRequest;
 use App\Models\Driver;
 use App\Models\Kendaraan;
 use App\Models\SubUnit;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -19,45 +20,15 @@ use Symfony\Component\HttpFoundation\Response;
 class KendaraanController extends Controller
 {
     use MediaUploadingTrait;
+    use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
-        abort_if(Gate::denies('front_kendaraan'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('kendaraan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $unit_kerjas = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $kendaraans = Kendaraan::with(['drivers', 'unit_kerja', 'owned_by', 'media'])->get();
 
-        $query = Kendaraan::with(['unit_kerja', 'peminjaman']);
-        if ($request->jenis) {
-            $query->where('jenis', $request->jenis);
-        }
-
-        if ($request->used) {
-            $query->where('is_used', ($request->used === 'used' ? 1 : 0));
-        }
-
-        if ($request->plat_no) {
-            $query->where('plat_no','LIKE','%'.$request->plat_no.'%');
-        }
-
-        if ($request->merk) {
-            $query->where('merk','LIKE','%'.$request->merk.'%');
-        }
-
-        if ($request->unit_kerja_id) {
-            $query->where('unit_kerja_id', $request->unit_kerja_id);
-        }
-
-        // if ($request->status) {
-        //     $query->whereHas('peminjaman', function($query) use ($request)  {
-        //         $query->where('status', $request->status);
-        //     });
-        // }
-
-        $kendaraans = $query->get();
-
-        session()->flashInput($request->input());
-
-        return view('frontend.kendaraans.index', compact('kendaraans', 'unit_kerjas'));
+        return view('frontend.kendaraans.index', compact('kendaraans'));
     }
 
     public function create()
@@ -68,7 +39,9 @@ class KendaraanController extends Controller
 
         $unit_kerjas = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.kendaraans.create', compact('drivers', 'unit_kerjas'));
+        $owned_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('frontend.kendaraans.create', compact('drivers', 'owned_bies', 'unit_kerjas'));
     }
 
     public function store(StoreKendaraanRequest $request)
@@ -94,9 +67,11 @@ class KendaraanController extends Controller
 
         $unit_kerjas = SubUnit::pluck('nama', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $kendaraan->load('drivers', 'unit_kerja');
+        $owned_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.kendaraans.edit', compact('drivers', 'kendaraan', 'unit_kerjas'));
+        $kendaraan->load('drivers', 'unit_kerja', 'owned_by');
+
+        return view('frontend.kendaraans.edit', compact('drivers', 'kendaraan', 'owned_bies', 'unit_kerjas'));
     }
 
     public function update(UpdateKendaraanRequest $request, Kendaraan $kendaraan)
@@ -124,7 +99,7 @@ class KendaraanController extends Controller
     {
         abort_if(Gate::denies('kendaraan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $kendaraan->load('drivers', 'unit_kerja', 'kendaraanPinjams');
+        $kendaraan->load('drivers', 'unit_kerja', 'owned_by', 'kendaraanPinjams');
 
         return view('frontend.kendaraans.show', compact('kendaraan'));
     }

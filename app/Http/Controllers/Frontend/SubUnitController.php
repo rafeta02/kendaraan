@@ -64,7 +64,7 @@ class SubUnitController extends Controller
     {
         abort_if(Gate::denies('sub_unit_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subUnit->load('unit', 'unitKerjaKendaraans');
+        $subUnit->load('unit');
 
         return view('frontend.subUnits.show', compact('subUnit'));
     }

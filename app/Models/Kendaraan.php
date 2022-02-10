@@ -4,10 +4,8 @@ namespace App\Models;
 
 use \DateTimeInterface;
 use App\Traits\Auditable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -15,9 +13,8 @@ use Spatie\MediaLibrary\Models\Media;
 class Kendaraan extends Model implements HasMedia
 {
     use SoftDeletes;
-    use Auditable;
-    use HasFactory;
     use HasMediaTrait;
+    use Auditable;
 
     public const JENIS_SELECT = [
         'mobil' => 'Mobil',
@@ -54,6 +51,7 @@ class Kendaraan extends Model implements HasMedia
         'operasional',
         'unit_kerja_id',
         'is_used',
+        'owned_by_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -80,35 +78,6 @@ class Kendaraan extends Model implements HasMedia
         return $this->belongsTo(SubUnit::class, 'unit_kerja_id');
     }
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
-    public function getNoPolAttribute()
-    {
-        preg_match_all("/[A-Z]+|\d+/", $this->attributes['plat_no'], $matches);
-        return implode('-', $matches[0]);
-    }
-
-    public function getNamaAttribute()
-    {
-        return Str::title($this->attributes['jenis']).' - '.Str::title($this->attributes['merk']);
-    }
-
-    public function getNoNamaAttribute()
-    {
-        preg_match_all("/[A-Z]+|\d+/", $this->attributes['plat_no'], $matches);
-        $no_po = implode('-', $matches[0]);
-        return $no_po. ' - '. Str::title($this->attributes['jenis']).' - '.Str::title($this->attributes['merk']);
-    }
-
-    public function peminjaman()
-    {
-        // return $this->hasOne(Pinjam::class, 'kendaraan_id', 'id')->where('is_done', 0);
-        return $this->hasMany(Pinjam::class, 'kendaraan_id', 'id')->where('is_done', 0);
-    }
-
     public function getFotoAttribute()
     {
         $files = $this->getMedia('foto');
@@ -119,5 +88,15 @@ class Kendaraan extends Model implements HasMedia
         });
 
         return $files;
+    }
+
+    public function owned_by()
+    {
+        return $this->belongsTo(User::class, 'owned_by_id');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

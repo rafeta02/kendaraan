@@ -11,9 +11,9 @@ use App\Models\Kendaraan;
 use App\Models\Pinjam;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Spatie\MediaLibrary\Models\Media;
 
 class PinjamController extends Controller
 {
