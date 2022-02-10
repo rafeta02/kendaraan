@@ -20,7 +20,7 @@ class KendaraanApiController extends Controller
     {
         abort_if(Gate::denies('kendaraan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new KendaraanResource(Kendaraan::with(['drivers', 'unit_kerja'])->get());
+        return new KendaraanResource(Kendaraan::with(['drivers', 'unit_kerja', 'owned_by'])->get());
     }
 
     public function store(StoreKendaraanRequest $request)
@@ -40,7 +40,7 @@ class KendaraanApiController extends Controller
     {
         abort_if(Gate::denies('kendaraan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new KendaraanResource($kendaraan->load(['drivers', 'unit_kerja']));
+        return new KendaraanResource($kendaraan->load(['drivers', 'unit_kerja', 'owned_by']));
     }
 
     public function update(UpdateKendaraanRequest $request, Kendaraan $kendaraan)

@@ -22,13 +22,22 @@
 
                     </th>
                     <th>
-                        Peminjaman ID
+                        {{ trans('cruds.logPeminjaman.fields.id') }}
                     </th>
                     <th>
-                        Kendaraan
+                        {{ trans('cruds.logPeminjaman.fields.peminjaman') }}
                     </th>
                     <th>
-                        Keperluan
+                        {{ trans('cruds.pinjam.fields.date_start') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.pinjam.fields.date_end') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.logPeminjaman.fields.kendaraan') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.kendaraan.fields.merk') }}
                     </th>
                     <th>
                         {{ trans('cruds.logPeminjaman.fields.peminjam') }}
@@ -37,7 +46,7 @@
                         {{ trans('cruds.logPeminjaman.fields.jenis') }}
                     </th>
                     <th>
-                        Log
+                        {{ trans('cruds.logPeminjaman.fields.log') }}
                     </th>
                     <th>
                         &nbsp;
@@ -94,14 +103,17 @@
     aaSorting: [],
     ajax: "{{ route('admin.log-peminjamen.index') }}",
     columns: [
-        { data: 'placeholder', name: 'placeholder' },
-        { data: 'peminjaman.id', name: 'peminjaman.id' },
-        { data: 'kendaraan_no_nama', name: 'kendaraan_no_nama' },
-        { data: 'peminjaman_reason', name: 'peminjaman.reason' },
-        { data: 'peminjam_name', name: 'peminjam.name' },
-        { data: 'jenis', name: 'jenis' },
-        { data: 'log', name: 'log' },
-        { data: 'actions', name: '{{ trans('global.actions') }}' }
+      { data: 'placeholder', name: 'placeholder' },
+{ data: 'id', name: 'id' },
+{ data: 'peminjaman_reason', name: 'peminjaman.reason' },
+{ data: 'peminjaman.date_start', name: 'peminjaman.date_start' },
+{ data: 'peminjaman.date_end', name: 'peminjaman.date_end' },
+{ data: 'kendaraan_plat_no', name: 'kendaraan.plat_no' },
+{ data: 'kendaraan.merk', name: 'kendaraan.merk' },
+{ data: 'peminjam_name', name: 'peminjam.name' },
+{ data: 'jenis', name: 'jenis' },
+{ data: 'log', name: 'log' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
@@ -112,7 +124,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-
+  
 });
 
 </script>

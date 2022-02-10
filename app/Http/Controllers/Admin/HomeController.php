@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
-use Gate;
 
 class HomeController
 {
@@ -46,17 +45,18 @@ class HomeController
         }
 
         $settings2 = [
-            'chart_title'        => 'Jumlah kendaraan',
-            'chart_type'         => 'number_block',
-            'report_type'        => 'group_by_relationship',
-            'model'              => 'App\Models\Kendaraan',
-            'group_by_field'     => 'nama',
-            'aggregate_function' => 'count',
-            'filter_field'       => 'created_at',
-            'column_class'       => 'col-md-6',
-            'entries_number'     => '5',
-            'relationship_name'  => 'unit_kerja',
-            'translation_key'    => 'kendaraan',
+            'chart_title'           => 'Jumlah Kendaraan',
+            'chart_type'            => 'number_block',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\Kendaraan',
+            'group_by_field'        => 'created_at',
+            'group_by_period'       => 'day',
+            'aggregate_function'    => 'count',
+            'filter_field'          => 'created_at',
+            'group_by_field_format' => 'Y-m-d H:i:s',
+            'column_class'          => 'col-md-6',
+            'entries_number'        => '5',
+            'translation_key'       => 'kendaraan',
         ];
 
         $settings2['total_number'] = 0;
@@ -81,24 +81,7 @@ class HomeController
         }
 
         $settings3 = [
-            'chart_title'           => 'Grafik Jumlah Peminjaman',
-            'chart_type'            => 'bar',
-            'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\Pinjam',
-            'group_by_field'        => 'date_start',
-            'group_by_period'       => 'month',
-            'aggregate_function'    => 'count',
-            'filter_field'          => 'created_at',
-            'group_by_field_format' => 'Y-m-d',
-            'column_class'          => 'col-md-12',
-            'entries_number'        => '5',
-            'translation_key'       => 'pinjam',
-        ];
-
-        $chart3 = new LaravelChart($settings3);
-
-        $settings4 = [
-            'chart_title'           => 'Peminjaman terakhir',
+            'chart_title'           => 'Latest Peminjaman',
             'chart_type'            => 'latest_entries',
             'report_type'           => 'group_by_date',
             'model'                 => 'App\Models\Pinjam',
@@ -108,42 +91,49 @@ class HomeController
             'filter_field'          => 'created_at',
             'group_by_field_format' => 'Y-m-d',
             'column_class'          => 'col-md-12',
-            'entries_number'        => '10',
+            'entries_number'        => '5',
             'fields'                => [
-                'kendaraan'     => 'no_nama',
-                'waktu_peminjaman' => '',
-                'tanggal_pengajuan' => '',
+                'kendaraan'     => 'plat_no',
+                'date_start'    => '',
+                'date_end'      => '',
                 'reason'        => '',
+                'status'        => '',
+                'status_text'   => '',
                 'borrowed_by'   => 'name',
+                'driver_status' => '',
+                'key_status'    => '',
             ],
             'translation_key' => 'pinjam',
         ];
 
-        $settings4['data'] = [];
-        // if (class_exists($settings4['model'])) {
-        //     $settings4['data'] = $settings4['model']::latest()
-        //         ->take($settings4['entries_number'])
-        //         ->get();
-        // }
-
-        if (class_exists($settings4['model'])) {
-            $query = $settings4['model']::latest();
-
-            if(!Gate::allows('is_admin') || !Gate::allows('is_adminlppm')) {
-                $query->where('status', 'diproses')
-                ->where('driver_status', 0)
-                ->whereHas('kendaraan', function($q) {
-                    $q->where('jenis', 'mobil');
-                });
-            }
-
-            $settings4['data'] = $query->take($settings4['entries_number'])->get();
+        $settings3['data'] = [];
+        if (class_exists($settings3['model'])) {
+            $settings3['data'] = $settings3['model']::latest()
+                ->take($settings3['entries_number'])
+                ->get();
         }
 
-        if (!array_key_exists('fields', $settings4)) {
-            $settings4['fields'] = [];
+        if (!array_key_exists('fields', $settings3)) {
+            $settings3['fields'] = [];
         }
 
-        return view('home', compact('chart3', 'settings1', 'settings2', 'settings4'));
+        $settings4 = [
+            'chart_title'           => 'Jumlah Peminjaman',
+            'chart_type'            => 'bar',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\Pinjam',
+            'group_by_field'        => 'created_at',
+            'group_by_period'       => 'month',
+            'aggregate_function'    => 'count',
+            'filter_field'          => 'created_at',
+            'group_by_field_format' => 'Y-m-d H:i:s',
+            'column_class'          => 'col-md-12',
+            'entries_number'        => '5',
+            'translation_key'       => 'pinjam',
+        ];
+
+        $chart4 = new LaravelChart($settings4);
+
+        return view('home', compact('chart4', 'settings1', 'settings2', 'settings3'));
     }
 }

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->longText('alamat')->nullable();
             $table->string('no_hp')->nullable();
             $table->string('jwt_token')->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

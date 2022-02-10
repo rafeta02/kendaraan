@@ -57,8 +57,6 @@ class UnitController extends Controller
     {
         abort_if(Gate::denies('unit_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $unit->load('unitSubUnits');
-
         return view('frontend.units.show', compact('unit'));
     }
 

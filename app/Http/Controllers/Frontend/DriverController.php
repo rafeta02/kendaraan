@@ -57,8 +57,6 @@ class DriverController extends Controller
     {
         abort_if(Gate::denies('driver_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $driver->load('driverKendaraans');
-
         return view('frontend.drivers.show', compact('driver'));
     }
 

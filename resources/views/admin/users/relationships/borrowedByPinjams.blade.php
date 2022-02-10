@@ -61,6 +61,9 @@
                             {{ trans('cruds.pinjam.fields.key_status') }}
                         </th>
                         <th>
+                            {{ trans('cruds.pinjam.fields.surat_permohonan') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -113,6 +116,13 @@
                             <td>
                                 <span style="display:none">{{ $pinjam->key_status ?? '' }}</span>
                                 <input type="checkbox" disabled="disabled" {{ $pinjam->key_status ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                @if($pinjam->surat_permohonan)
+                                    <a href="{{ $pinjam->surat_permohonan->getUrl() }}" target="_blank">
+                                        {{ trans('global.view_file') }}
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 @can('pinjam_show')

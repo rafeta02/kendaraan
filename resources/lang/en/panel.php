@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'Portal Informasi dan Peminjaman Kendaraan Operasional',
+    'site_title' => 'Aplikasi Peminjaman Kendaraan LARAVEL 7',
 ];

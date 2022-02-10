@@ -35,26 +35,22 @@
                             </div>
                         </div>
                         {{-- Widget - latest entries --}}
-                        <div class="{{ $settings4['column_class'] }}" style="overflow-x: auto;">
-                            <h3>{{ $settings4['chart_title'] }}</h3>
+                        <div class="{{ $settings3['column_class'] }}" style="overflow-x: auto;">
+                            <h3>{{ $settings3['chart_title'] }}</h3>
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        @foreach($settings4['fields'] as $key => $value)
+                                        @foreach($settings3['fields'] as $key => $value)
                                             <th>
-                                                {{ trans(sprintf('cruds.%s.fields.%s', $settings4['translation_key'] ?? 'pleaseUpdateWidget', $key)) }}
+                                                {{ trans(sprintf('cruds.%s.fields.%s', $settings3['translation_key'] ?? 'pleaseUpdateWidget', $key)) }}
                                             </th>
                                         @endforeach
-                                        <th>
-                                            Status
-                                        </th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($settings4['data'] as $entry)
+                                    @forelse($settings3['data'] as $entry)
                                         <tr>
-                                            @foreach($settings4['fields'] as $key => $value)
+                                            @foreach($settings3['fields'] as $key => $value)
                                                 <td>
                                                     @if($value === '')
                                                         {{ $entry->{$key} }}
@@ -67,32 +63,19 @@
                                                     @endif
                                                 </td>
                                             @endforeach
-                                            <td>
-                                                @if($entry->status == 'selesai')
-                                                    <span class="badge badge-dark">Dikembalikan :<br>{{ $entry->date_return_formatted }}</span>
-                                                @elseif ($entry->status == 'ditolak')
-                                                    <span class="badge badge-dark">Ditolak dg alasan :<br>({{ $entry->status_text }})</span>
-                                                @else
-                                                    <span class="badge badge-{{ App\Models\Pinjam::STATUS_BACKGROUND[$entry->status] ?? '' }}">{{ App\Models\Pinjam::STATUS_SELECT[$entry->status] ?? '' }}</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.process.index') }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            </td>
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan="{{ count($settings4['fields']) }}">{{ __('No entries found') }}</td>
+                                            <td colspan="{{ count($settings3['fields']) }}">{{ __('No entries found') }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
                         </div>
-                        <div class="{{ $chart3->options['column_class'] }}">
-                            <h3>{!! $chart3->options['chart_title'] !!}</h3>
-                            {!! $chart3->renderHtml() !!}
+
+                        <div class="{{ $chart4->options['column_class'] }}">
+                            <h3>{!! $chart4->options['chart_title'] !!}</h3>
+                            {!! $chart4->renderHtml() !!}
                         </div>
                     </div>
                 </div>
@@ -103,5 +86,5 @@
 @endsection
 @section('scripts')
 @parent
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>{!! $chart3->renderJs() !!}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>{!! $chart4->renderJs() !!}
 @endsection

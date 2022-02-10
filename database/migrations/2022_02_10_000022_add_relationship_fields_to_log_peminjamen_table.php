@@ -10,11 +10,11 @@ class AddRelationshipFieldsToLogPeminjamenTable extends Migration
     {
         Schema::table('log_peminjamen', function (Blueprint $table) {
             $table->unsignedBigInteger('peminjaman_id')->nullable();
-            $table->foreign('peminjaman_id', 'peminjaman_fk_5819110')->references('id')->on('pinjams');
+            $table->foreign('peminjaman_id', 'peminjaman_fk_5916043')->references('id')->on('pinjams');
             $table->unsignedBigInteger('kendaraan_id')->nullable();
-            $table->foreign('kendaraan_id', 'kendaraan_fk_5815600')->references('id')->on('kendaraans');
+            $table->foreign('kendaraan_id', 'kendaraan_fk_5916036')->references('id')->on('kendaraans');
             $table->unsignedBigInteger('peminjam_id')->nullable();
-            $table->foreign('peminjam_id', 'peminjam_fk_5815601')->references('id')->on('users');
+            $table->foreign('peminjam_id', 'peminjam_fk_5916037')->references('id')->on('users');
         });
     }
 }

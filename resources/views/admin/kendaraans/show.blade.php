@@ -101,6 +101,14 @@
                             @endforeach
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.kendaraan.fields.owned_by') }}
+                        </th>
+                        <td>
+                            {{ $kendaraan->owned_by->name ?? '' }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
