@@ -135,6 +135,18 @@
                             <input type="checkbox" disabled="disabled" {{ $pinjam->is_done ? 'checked' : '' }}>
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.pinjam.fields.surat_permohonan') }}
+                        </th>
+                        <td>
+                            @if($pinjam->surat_permohonan)
+                                <a href="{{ $pinjam->surat_permohonan->getUrl() }}" target="_blank">
+                                    {{ trans('global.view_file') }}
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

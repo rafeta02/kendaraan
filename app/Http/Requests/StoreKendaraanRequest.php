@@ -37,6 +37,9 @@ class StoreKendaraanRequest extends FormRequest
             'drivers' => [
                 'array',
             ],
+            'foto' => [
+                'array',
+            ],
         ];
     }
 }

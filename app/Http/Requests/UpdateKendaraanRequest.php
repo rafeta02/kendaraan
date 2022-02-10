@@ -37,6 +37,9 @@ class UpdateKendaraanRequest extends FormRequest
             'drivers' => [
                 'array',
             ],
+            'foto' => [
+                'array',
+            ],
         ];
     }
 }

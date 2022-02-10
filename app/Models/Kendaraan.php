@@ -8,12 +8,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
-class Kendaraan extends Model
+class Kendaraan extends Model implements HasMedia
 {
     use SoftDeletes;
     use Auditable;
     use HasFactory;
+    use HasMediaTrait;
 
     public const JENIS_SELECT = [
         'mobil' => 'Mobil',
@@ -31,6 +35,10 @@ class Kendaraan extends Model
     ];
 
     public $table = 'kendaraans';
+
+    protected $appends = [
+        'foto',
+    ];
 
     protected $dates = [
         'created_at',
@@ -50,6 +58,12 @@ class Kendaraan extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
 
     public function kendaraanPinjams()
     {
@@ -93,5 +107,17 @@ class Kendaraan extends Model
     {
         // return $this->hasOne(Pinjam::class, 'kendaraan_id', 'id')->where('is_done', 0);
         return $this->hasMany(Pinjam::class, 'kendaraan_id', 'id')->where('is_done', 0);
+    }
+
+    public function getFotoAttribute()
+    {
+        $files = $this->getMedia('foto');
+        $files->each(function ($item) {
+            $item->url = $item->getUrl();
+            $item->thumbnail = $item->getUrl('thumb');
+            $item->preview = $item->getUrl('preview');
+        });
+
+        return $files;
     }
 }

@@ -61,6 +61,9 @@
                         {{ trans('cruds.pinjam.fields.key_status') }}
                     </th>
                     <th>
+                        {{ trans('cruds.pinjam.fields.surat_permohonan') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -129,6 +132,7 @@
 { data: 'borrowed_by.email', name: 'borrowed_by.email' },
 { data: 'driver_status', name: 'driver_status' },
 { data: 'key_status', name: 'key_status' },
+{ data: 'surat_permohonan', name: 'surat_permohonan', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -140,7 +144,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

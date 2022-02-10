@@ -219,6 +219,8 @@ return [
             'deleted_at_helper'  => ' ',
             'is_used'            => 'Digunakan',
             'is_used_helper'     => ' ',
+            'foto'               => 'Foto',
+            'foto_helper'        => ' ',
         ],
     ],
     'log' => [
@@ -314,6 +316,8 @@ return [
             'is_done_helper'       => ' ',
             'tanggal_pengajuan'         => 'Tanggal Pengajuan',
             'tanggal_pengajuan_helper'  => ' ',
+            'surat_permohonan'        => 'Surat Permohonan Kendaraan Operasional',
+            'surat_permohonan_helper' => ' ',
         ],
     ],
 ];

@@ -92,6 +92,18 @@
                                         <input type="checkbox" disabled="disabled" {{ $kendaraan->is_used ? 'checked' : '' }}>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.kendaraan.fields.foto') }}
+                                    </th>
+                                    <td>
+                                        @foreach($kendaraan->foto as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $media->getUrl('thumb') }}">
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

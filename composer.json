@@ -19,6 +19,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "laraveldaily/laravel-charts": "^0.1.24",
+        "spatie/laravel-medialibrary": "^7.19",
         "nuovo/spreadsheet-reader": "^0.5.11",
         "realrashid/sweet-alert": "^4.1",
         "yajra/laravel-datatables-oracle": "^9.18"

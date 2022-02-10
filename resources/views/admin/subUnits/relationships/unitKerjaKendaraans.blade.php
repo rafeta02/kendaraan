@@ -43,6 +43,9 @@
                             {{ trans('cruds.subUnit.fields.slug') }}
                         </th>
                         <th>
+                            {{ trans('cruds.kendaraan.fields.foto') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -73,6 +76,13 @@
                             </td>
                             <td>
                                 {{ $kendaraan->unit_kerja->slug ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($kendaraan->foto as $key => $media)
+                                    <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $media->getUrl('thumb') }}">
+                                    </a>
+                                @endforeach
                             </td>
                             <td>
                                 @can('kendaraan_show')
@@ -150,7 +160,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

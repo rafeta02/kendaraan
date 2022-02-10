@@ -47,6 +47,9 @@
                         {{ trans('cruds.subUnit.fields.slug') }}
                     </th>
                     <th>
+                        {{ trans('cruds.kendaraan.fields.foto') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -109,6 +112,7 @@
 { data: 'operasional', name: 'operasional' },
 { data: 'unit_kerja_nama', name: 'unit_kerja.nama' },
 { data: 'unit_kerja.slug', name: 'unit_kerja.slug' },
+{ data: 'foto', name: 'foto', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -120,7 +124,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

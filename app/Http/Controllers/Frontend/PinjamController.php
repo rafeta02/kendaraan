@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPinjamRequest;
 use App\Http\Requests\StorePinjamRequest;
 use App\Http\Requests\UpdatePinjamRequest;
@@ -15,9 +16,12 @@ use Symfony\Component\HttpFoundation\Response;
 use DB;
 use Carbon\Carbon;
 use Alert;
+use Spatie\MediaLibrary\Models\Media;
 
 class PinjamController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index()
     {
         abort_if(Gate::denies('front_pinjam'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -51,6 +55,14 @@ class PinjamController extends Controller
         $sukses = DB::transaction(function() use ($request) {
             $pinjam = Pinjam::create($request->all());
 
+            if ($request->input('surat_permohonan', false)) {
+                $pinjam->addMedia(storage_path('tmp/uploads/' . basename($request->input('surat_permohonan'))))->toMediaCollection('surat_permohonan');
+            }
+
+            if ($media = $request->input('ck-media', false)) {
+                Media::whereIn('id', $media)->update(['model_id' => $pinjam->id]);
+            }
+
             $log = LogPeminjaman::create([
                 'peminjaman_id' => $pinjam->id,
                 'kendaraan_id' => $pinjam->kendaraan_id,
@@ -61,6 +73,7 @@ class PinjamController extends Controller
 
             return $log['log'];
         });
+
         $this->kirimWablas('6289669709492', $sukses);
 
         return redirect()->route('frontend.pinjams.index');
@@ -80,6 +93,17 @@ class PinjamController extends Controller
     public function update(UpdatePinjamRequest $request, Pinjam $pinjam)
     {
         $pinjam->update($request->all());
+
+        if ($request->input('surat_permohonan', false)) {
+            if (!$pinjam->surat_permohonan || $request->input('surat_permohonan') !== $pinjam->surat_permohonan->file_name) {
+                if ($pinjam->surat_permohonan) {
+                    $pinjam->surat_permohonan->delete();
+                }
+                $pinjam->addMedia(storage_path('tmp/uploads/' . basename($request->input('surat_permohonan'))))->toMediaCollection('surat_permohonan');
+            }
+        } elseif ($pinjam->surat_permohonan) {
+            $pinjam->surat_permohonan->delete();
+        }
 
         return redirect()->route('frontend.pinjams.index');
     }
@@ -142,29 +166,41 @@ class PinjamController extends Controller
     }
 
     function kirimWablas($phone, $msg)
-        {
-            $link  =  "https://console.wablas.com/api/send-message";
-            $data = [
-            'phone' => $phone,
-            'message' => $msg,
-            ];
+    {
+        $link  =  "https://console.wablas.com/api/send-message";
+        $data = [
+        'phone' => $phone,
+        'message' => $msg,
+        ];
 
-            $curl = curl_init();
-            $token =  "QW6G6OsQEHhXj3eUv2lXD4xGGpDSWQlnHvlDYc0Mf8TscZJ9vaUNYa7N6pzSYbw8";
+        $curl = curl_init();
+        $token =  "QW6G6OsQEHhXj3eUv2lXD4xGGpDSWQlnHvlDYc0Mf8TscZJ9vaUNYa7N6pzSYbw8";
 
-            curl_setopt($curl, CURLOPT_HTTPHEADER,
-                array(
-                    "Authorization: $token",
-                )
-            );
-            curl_setopt($curl, CURLOPT_URL, $link);
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            $result = curl_exec($curl);
-            curl_close($curl);
-            return $result;
-        }
+        curl_setopt($curl, CURLOPT_HTTPHEADER,
+            array(
+                "Authorization: $token",
+            )
+        );
+        curl_setopt($curl, CURLOPT_URL, $link);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        $result = curl_exec($curl);
+        curl_close($curl);
+        return $result;
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('pinjam_create') && Gate::denies('pinjam_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new Pinjam();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
 }

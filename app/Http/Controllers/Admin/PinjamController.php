@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPinjamRequest;
 use App\Http\Requests\StorePinjamRequest;
 use App\Http\Requests\UpdatePinjamRequest;
@@ -12,9 +13,12 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Spatie\MediaLibrary\Models\Media;
 
 class PinjamController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('pinjam_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -74,8 +78,11 @@ class PinjamController extends Controller
             $table->editColumn('key_status', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->key_status ? 'checked' : null) . '>';
             });
+            $table->editColumn('surat_permohonan', function ($row) {
+                return $row->surat_permohonan ? '<a href="' . $row->surat_permohonan->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'kendaraan', 'borrowed_by', 'driver_status', 'key_status']);
+            $table->rawColumns(['actions', 'placeholder', 'kendaraan', 'borrowed_by', 'driver_status', 'key_status', 'surat_permohonan']);
 
             return $table->make(true);
         }
@@ -96,6 +103,14 @@ class PinjamController extends Controller
     {
         $pinjam = Pinjam::create($request->all());
 
+        if ($request->input('surat_permohonan', false)) {
+            $pinjam->addMedia(storage_path('tmp/uploads/' . basename($request->input('surat_permohonan'))))->toMediaCollection('surat_permohonan');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $pinjam->id]);
+        }
+
         return redirect()->route('admin.pinjams.index');
     }
 
@@ -113,6 +128,17 @@ class PinjamController extends Controller
     public function update(UpdatePinjamRequest $request, Pinjam $pinjam)
     {
         $pinjam->update($request->all());
+
+        if ($request->input('surat_permohonan', false)) {
+            if (!$pinjam->surat_permohonan || $request->input('surat_permohonan') !== $pinjam->surat_permohonan->file_name) {
+                if ($pinjam->surat_permohonan) {
+                    $pinjam->surat_permohonan->delete();
+                }
+                $pinjam->addMedia(storage_path('tmp/uploads/' . basename($request->input('surat_permohonan'))))->toMediaCollection('surat_permohonan');
+            }
+        } elseif ($pinjam->surat_permohonan) {
+            $pinjam->surat_permohonan->delete();
+        }
 
         return redirect()->route('admin.pinjams.index');
     }
@@ -140,5 +166,17 @@ class PinjamController extends Controller
         Pinjam::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('pinjam_create') && Gate::denies('pinjam_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new Pinjam();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

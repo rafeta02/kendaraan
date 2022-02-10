@@ -47,6 +47,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Kendaraan
     Route::delete('kendaraans/destroy', 'KendaraanController@massDestroy')->name('kendaraans.massDestroy');
+    Route::post('kendaraans/media', 'KendaraanController@storeMedia')->name('kendaraans.storeMedia');
+    Route::post('kendaraans/ckmedia', 'KendaraanController@storeCKEditorImages')->name('kendaraans.storeCKEditorImages');
     Route::post('kendaraans/parse-csv-import', 'KendaraanController@parseCsvImport')->name('kendaraans.parseCsvImport');
     Route::post('kendaraans/process-csv-import', 'KendaraanController@processCsvImport')->name('kendaraans.processCsvImport');
     Route::resource('kendaraans', 'KendaraanController');
@@ -62,6 +64,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Pinjam
     Route::delete('pinjams/destroy', 'PinjamController@massDestroy')->name('pinjams.massDestroy');
+    Route::post('pinjams/media', 'PinjamController@storeMedia')->name('pinjams.storeMedia');
+    Route::post('pinjams/ckmedia', 'PinjamController@storeCKEditorImages')->name('pinjams.storeCKEditorImages');
     Route::resource('pinjams', 'PinjamController');
 
     // Proceed
@@ -119,6 +123,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Kendaraan
     Route::delete('kendaraans/destroy', 'KendaraanController@massDestroy')->name('kendaraans.massDestroy');
+    Route::post('kendaraans/media', 'KendaraanController@storeMedia')->name('kendaraans.storeMedia');
+    Route::post('kendaraans/ckmedia', 'KendaraanController@storeCKEditorImages')->name('kendaraans.storeCKEditorImages');
     Route::resource('kendaraans', 'KendaraanController');
 
     // Log Peminjaman
@@ -131,6 +137,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Pinjam
     Route::delete('pinjams/destroy', 'PinjamController@massDestroy')->name('pinjams.massDestroy');
+    Route::post('pinjams/media', 'PinjamController@storeMedia')->name('pinjams.storeMedia');
+    Route::post('pinjams/ckmedia', 'PinjamController@storeCKEditorImages')->name('pinjams.storeCKEditorImages');
     Route::post('pinjams/selesai', 'PinjamController@selesai')->name('pinjams.selesai');
     Route::resource('pinjams', 'PinjamController');
 

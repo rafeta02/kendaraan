@@ -9,13 +9,17 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
-class Pinjam extends Model
+class Pinjam extends Model implements HasMedia
 {
     use SoftDeletes;
     use MultiTenantModelTrait;
     use Auditable;
     use HasFactory;
+    use HasMediaTrait;
 
     public const STATUS_SELECT = [
         'diajukan' => 'Diajukan',
@@ -36,6 +40,10 @@ class Pinjam extends Model
     ];
 
     public $table = 'pinjams';
+
+    protected $appends = [
+        'surat_permohonan',
+    ];
 
     protected $dates = [
         'date_start',
@@ -73,6 +81,12 @@ class Pinjam extends Model
     {
         parent::boot();
         Pinjam::observe(new \App\Observers\PinjamActionObserver());
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
     public function kendaraan()
@@ -138,6 +152,11 @@ class Pinjam extends Model
     public function satpam()
     {
         return $this->belongsTo(Satpam::class, 'satpam_id');
+    }
+
+    public function getSuratPermohonanAttribute()
+    {
+        return $this->getMedia('surat_permohonan')->last();
     }
 
     public function created_by()
